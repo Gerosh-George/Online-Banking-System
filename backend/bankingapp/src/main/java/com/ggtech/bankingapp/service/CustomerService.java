@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ggtech.bankingapp.model.Customer;
-import com.ggtech.bankingapp.model.Transaction;
+
 import com.ggtech.bankingapp.repository.CustomerRepository;
 
-import lombok.RequiredArgsConstructor;
+
 
 @Service
-@RequiredArgsConstructor
 public class CustomerService {
 	@Autowired
 	CustomerRepository custRepo;

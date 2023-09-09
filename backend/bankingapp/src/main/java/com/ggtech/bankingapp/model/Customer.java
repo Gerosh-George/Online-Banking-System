@@ -13,11 +13,9 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Length;
 
-import lombok.Data;
 
 
 @Entity
-@Data
 public class Customer {
 	@Id
 	@Column(nullable=false)

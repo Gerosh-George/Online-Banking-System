@@ -1,75 +1,77 @@
 package com.ggtech.bankingapp.model;
 
 
+import java.time.LocalDateTime;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
+import javax.persistence.Table;
 
 @Entity
+@Table
 public class Account {
+
 	@Id
-	private long accno;
-	private String acctype;
-	private double balance;
-	private String openingDate;
-	private String ifsc;
+	@GeneratedValue
+	@Column(name="Account_no")
+	private int accountNo;
+
+	@Column(nullable=false)
+	private String accountType;
+
+	@Column(nullable=false)
+	private int balance;
+
+	@Column(nullable=false)
 	private String branch;
-	private boolean isDisabled;
-	
+
+	@Column(nullable=false)
+	private String ifsc;
+
+	@Column(nullable=false)
+	private boolean isdisabled;
+
+	@Column(nullable=true)
+	private LocalDateTime openeingDate;
 
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private Customer user;
-	
-	@OneToMany(mappedBy="acc_no", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<Transaction> transaction;
 
-	public long getAccno() {
-		return accno;
+	public Customer getUser() {
+		return user;
 	}
 
-	public void setAccno(long accno) {
-		this.accno = accno;
+	public void setUser(Customer user) {
+		this.user = user;
 	}
 
-	public String getAcctype() {
-		return acctype;
+	public int getAccountNo() {
+		return accountNo;
 	}
 
-	public void setAcctype(String acctype) {
-		this.acctype = acctype;
+	public void setAccountNo(int accountNo) {
+		this.accountNo = accountNo;
 	}
 
-	public double getBalance() {
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public int getBalance() {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(int balance) {
 		this.balance = balance;
-	}
-
-	public String getOpeningDate() {
-		return openingDate;
-	}
-
-	public void setOpeningDate(String openingDate) {
-		this.openingDate = openingDate;
-	}
-
-	public String getIfsc() {
-		return ifsc;
-	}
-
-	public void setIfsc(String ifsc) {
-		this.ifsc = ifsc;
 	}
 
 	public String getBranch() {
@@ -80,33 +82,31 @@ public class Account {
 		this.branch = branch;
 	}
 
-	public boolean isDisabled() {
-		return isDisabled;
+	public String getIfsc() {
+		return ifsc;
 	}
 
-	public void setDisabled(boolean isDisabled) {
-		this.isDisabled = isDisabled;
+	public void setIfsc(String ifsc) {
+		this.ifsc = ifsc;
 	}
 
-	public Customer getUser() {
-		return user;
+	public boolean isIsdisabled() {
+		return isdisabled;
 	}
 
-	public void setUser(Customer user) {
-		this.user = user;
+	public void setIsdisabled(boolean isdisabled) {
+		this.isdisabled = isdisabled;
 	}
 
-	public List<Transaction> getTransaction() {
-		return transaction;
+	public LocalDateTime getOpeneingDate() {
+		return openeingDate;
 	}
 
-	public void setTransaction(List<Transaction> transaction) {
-		this.transaction = transaction;
+	public void setOpeneingDate(LocalDateTime openeingDate) {
+		this.openeingDate = openeingDate;
 	}
-	
-	
-	
-	
-	
+
+
+
+
 }
-

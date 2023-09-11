@@ -39,8 +39,13 @@ public class Account {
 	private LocalDateTime openeingDate;
 
 	@ManyToOne
-	@JoinColumn(name="userId")
-	private Customer user;
+
+	@JoinColumn(name="customerId")
+	private Customer customer;
+	
+	@OneToMany(mappedBy="acc_no", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Transaction> transaction;
+
 
 	public Customer getUser() {
 		return user;
@@ -102,8 +107,13 @@ public class Account {
 		return openeingDate;
 	}
 
-	public void setOpeneingDate(LocalDateTime openeingDate) {
-		this.openeingDate = openeingDate;
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 

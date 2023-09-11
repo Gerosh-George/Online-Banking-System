@@ -12,11 +12,11 @@ import com.ggtech.bankingapp.service.CustomerService;
 
 @RestController
 @CrossOrigin("*")
-public class UserController {
+public class CustomerController {
 	@Autowired
 	CustomerService custService;
 	
-	@GetMapping("/helo")
+	@GetMapping("/hello")
 	public String f() {
 		return "Hello!";
 	}

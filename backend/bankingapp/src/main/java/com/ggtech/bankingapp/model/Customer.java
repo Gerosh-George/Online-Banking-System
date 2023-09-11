@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.Length;
 public class Customer {
 	@Id
 	@Column(nullable=false)
-	private String userId;
+	private String customerId;
 	
 	
 	@Column(nullable=false)
@@ -47,14 +47,14 @@ public class Customer {
 	
 	
 	
-	public String getUserId() {
-		return userId;
+	public String getCustomerId() {
+		return customerId;
 	}
 
 
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 
@@ -167,7 +167,7 @@ public class Customer {
 
 
 
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Account> account;
 	
 	

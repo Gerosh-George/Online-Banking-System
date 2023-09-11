@@ -26,8 +26,8 @@ public class Account {
 	
 
 	@ManyToOne
-	@JoinColumn(name="userId")
-	private Customer user;
+	@JoinColumn(name="customerId")
+	private Customer customer;
 	
 	@OneToMany(mappedBy="acc_no", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Transaction> transaction;
@@ -88,12 +88,12 @@ public class Account {
 		this.isDisabled = isDisabled;
 	}
 
-	public Customer getUser() {
-		return user;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setUser(Customer user) {
-		this.user = user;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public List<Transaction> getTransaction() {

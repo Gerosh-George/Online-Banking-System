@@ -20,7 +20,7 @@ public class CustomerService {
 	public String saveCustomer(Customer cust) {
 		
 		String result = "";
-		Optional<Customer> o = custRepo.findById(cust.getUserId());
+		Optional<Customer> o = custRepo.findById(cust.getCustomerId());
 		if (o.isPresent()) {
 			result = "Customer already exists!";
 		} else {

@@ -39,21 +39,10 @@ public class Account {
 	private LocalDateTime openeingDate;
 
 	@ManyToOne
-
 	@JoinColumn(name="customerId")
 	private Customer customer;
-	
-	@OneToMany(mappedBy="acc_no", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<Transaction> transaction;
 
 
-	public Customer getUser() {
-		return user;
-	}
-
-	public void setUser(Customer user) {
-		this.user = user;
-	}
 
 	public int getAccountNo() {
 		return accountNo;

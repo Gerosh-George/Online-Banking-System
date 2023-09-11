@@ -5,7 +5,7 @@ import axios from "axios";
 const Registration = () => {
   const baseURL = "http://localhost:8080/saveCustomer";
   const navigate = useNavigate();
-  const [userId, setCustomerId] = useState("");
+  const [customerId, setCustomerId] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setmobile] = useState("");
@@ -43,7 +43,7 @@ const Registration = () => {
     console.log(event);
     axios
       .post(baseURL, {
-        userId,
+        customerId,
         password: password,
         name: name,
         mobile,
@@ -73,7 +73,7 @@ const Registration = () => {
       Customer ID:
       <input
         type="text"
-        value={userId}
+        value={customerId}
         onChange={customerIdChangeHandler}
         placeholder="Enter Customer ID number"
         required

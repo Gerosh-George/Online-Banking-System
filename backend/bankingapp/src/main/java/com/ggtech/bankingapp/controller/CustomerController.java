@@ -20,8 +20,15 @@ public class CustomerController {
 	public String f() {
 		return "Hello!";
 	}
+
+	@PostMapping("/hello")
+	@CrossOrigin
+	public String ff() {
+		return "Hello!";
+	}
 	
 	@PostMapping("/saveCustomer")
+	@CrossOrigin
 	public String saveCustomer(@RequestBody Customer user) {
 		return custService.saveCustomer(user);
 	}

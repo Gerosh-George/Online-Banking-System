@@ -7,7 +7,8 @@ import Registration from './Components/Registration';
 
 function App() {
   return (
-    <div className="App">
+
+  <div>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<HomePage/>} />

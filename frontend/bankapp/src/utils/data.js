@@ -1,0 +1,1 @@
+export const AccList= ["accountType","branch","ifsc","OpeningDate"];

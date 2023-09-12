@@ -6,7 +6,9 @@ function HomePage() {
     <>
       <div>HomePage</div>
       <Link to="/account">Account</Link>
-    </>
+
+     </>
+
   )
 }
 

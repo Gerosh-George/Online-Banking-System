@@ -18,8 +18,8 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 public class Customer {
 	@Id
-	@Column(nullable=false)
-	private String customerId;
+	@GeneratedValue
+	private int customerId;
 	
 	
 	@Column(nullable=false)
@@ -47,13 +47,13 @@ public class Customer {
 	
 	
 	
-	public String getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
 
 
 
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 

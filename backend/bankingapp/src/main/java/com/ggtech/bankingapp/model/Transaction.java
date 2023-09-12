@@ -1,6 +1,6 @@
 package com.ggtech.bankingapp.model;
 
-import javax.persistence.Entity;
+import  javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;

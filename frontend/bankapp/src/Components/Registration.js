@@ -1,12 +1,33 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  Grid,
+  Paper,
+  Avatar,
+  TextField,
+  Button,
+  Typography,
+  Link,
+} from "@mui/material";
+import InputComponent from "./InputComponent";
 
 const Registration = () => {
-  const baseURL = "http://localhost:8080/saveCustomer";
+  const paperStyle = {
+    padding: 20,
+    height: "100%",
+    width: 350,
+    margin: "40px auto",
+  };
+  const avatarStyle = { backgroundColor: "#1bbd7e" };
+  const btnstyle = { margin: "8px 0" };
+
+  const baseURL = "http://localhost:8080/register";
   const navigate = useNavigate();
+
   const [customerId, setCustomerId] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setmobile] = useState("");
   const [aadhar, setAadhar] = useState("");
@@ -38,16 +59,27 @@ const Registration = () => {
     setDob(event.target.value);
   };
 
+  const emailHandler = (event) => {
+    setEmail(event.target.value);
+  };
+
   const submitActionHandler = (event) => {
     event.preventDefault();
-    console.log(event);
+    console.log(event, {
+      password: password,
+      name: name,
+      mobile,
+      aadhar,
+      email,
+      dob,
+    });
     axios
       .post(baseURL, {
-        customerId,
         password: password,
         name: name,
         mobile,
         aadhar,
+        email,
         dob,
       })
       .then((response) => {
@@ -69,68 +101,78 @@ const Registration = () => {
     // navigate("/read");
   };
   return (
-    <form onSubmit={submitActionHandler}>
-      Customer ID:
-      <input
-        type="text"
-        value={customerId}
-        onChange={customerIdChangeHandler}
-        placeholder="Enter Customer ID number"
-        required
-      />
-      <br></br>
-      Password :
-      <input
-        type="password"
-        value={password}
-        onChange={passwordHandler}
-        placeholder="Enter password"
-        required
-      />
-      <br></br>
-      Name:
-      <input
-        type="text"
-        value={name}
-        onChange={nameHandler}
-        placeholder="Enter name"
-        required
-      />
-      <br></br>
-      Mobile :
-      <input
-        type="number"
-        value={mobile}
-        onChange={mobileHandler}
-        placeholder="Enter Mobile"
-        required
-      />
-      <br></br>
-      DoB :
-      <input
-        type="text"
-        value={dob}
-        onChange={dobHandler}
-        placeholder="Enter DoB"
-        required
-      />
-      <br></br>
-      Aadhar :
-      <input
-        type="text"
-        value={aadhar}
-        onChange={aadharHandler}
-        placeholder="Enter Aadhar"
-        required
-      />
-      <br></br>
-      <br></br>
-      <button type="submit">Submit</button>
-      &nbsp;&nbsp;&nbsp;
-      <button type="reset" onClick={() => cancelHandler()}>
-        Cancel
-      </button>
-    </form>
+    <Grid>
+      <Paper elevation={10} style={paperStyle}>
+        <Grid item align="center">
+          <Avatar style={avatarStyle}></Avatar>
+          <h2>Customer Sign Up</h2>
+        </Grid>
+        <Grid item xs={12}>
+          <InputComponent
+            _id={"Customer Name"}
+            _value={name}
+            _placeholder={"Enter Customer Name"}
+            _changeHandler={nameHandler}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputComponent
+            _id={"Password"}
+            _value={password}
+            _placeholder={"Enter Password"}
+            _changeHandler={passwordHandler}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputComponent
+            _id={"Mobile"}
+            _value={mobile}
+            _placeholder={"Enter Mobile Number"}
+            _changeHandler={mobileHandler}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputComponent
+            _id={"Email"}
+            _value={email}
+            _placeholder={"Enter Email "}
+            _changeHandler={emailHandler}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <InputComponent
+            _id={"Aadhaar"}
+            _value={aadhar}
+            _placeholder={"Enter Aadhar Number"}
+            _changeHandler={aadharHandler}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <InputComponent
+            _id={"Date Of Birth"}
+            _value={dob}
+            _placeholder={"Enter DOB"}
+            _changeHandler={dobHandler}
+          />
+        </Grid>
+
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          style={btnstyle}
+          fullWidth
+          onClick={submitActionHandler}
+        >
+          Sign Up
+        </Button>
+
+        <Typography>
+          Already Customer : <Link href="#">Sign In</Link>
+        </Typography>
+      </Paper>
+    </Grid>
   );
 };
 export default Registration;

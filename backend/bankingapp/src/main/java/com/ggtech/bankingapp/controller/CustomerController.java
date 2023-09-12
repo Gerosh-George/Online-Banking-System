@@ -10,16 +10,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ggtech.bankingapp.model.Customer;
 import com.ggtech.bankingapp.service.CustomerService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 public class CustomerController {
 	@Autowired
 	CustomerService custService;
 	
-	@GetMapping("/hello")
-	public String f() {
-		return "Hello!";
+	@GetMapping("/customers")
+	@CrossOrigin
+	public List<Customer> getAllCustomers() {
+		return custService.getAllCustomerList();
 	}
+	@PostMapping("/login")
+	@CrossOrigin
+	public String loginUser(@RequestBody Customer customer){
+		return custService.validateCustomer(customer);
+	}
+
+
 
 	@PostMapping("/hello")
 	@CrossOrigin

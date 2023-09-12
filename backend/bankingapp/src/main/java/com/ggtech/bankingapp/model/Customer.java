@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -18,9 +19,8 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 public class Customer {
 	@Id
-	@Column(nullable=false)
-	private String customerId;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long customerId;
 	
 	@Column(nullable=false)
 	private String name;
@@ -28,6 +28,10 @@ public class Customer {
 	@Column(nullable=false)
 	@Length(min=8, max=20, message="Password must be between 8 to 20 characters")
 	private String password;
+
+	@Email(message="email must be valid")
+	@Column(nullable=false)
+	private String email;
 	
 	@Column(nullable=false)
 	private long mobile;
@@ -47,17 +51,21 @@ public class Customer {
 	
 	
 	
-	public String getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 
-
-
 	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+		this.customerId = Long.parseLong(customerId);
 	}
 
+	public String getEmail() {
+		return email;
+	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getName() {
 		return name;

@@ -3,6 +3,8 @@ package com.ggtech.bankingapp.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.ggtech.bankingapp.model.LoginRequest;
+import com.ggtech.bankingapp.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +26,11 @@ public class CustomerService {
         return custRepo.findAll();
 
 	}
-	
+
+	@Autowired
+	AccountRepository accRepo;
+
 	public String saveCustomer(Customer cust) {
-		
 		String result = "";
 		Optional<Customer> o = custRepo.findById(cust.getCustomerId());
 		if (o.isPresent()) {
@@ -38,17 +42,23 @@ public class CustomerService {
 		return result;
 	}
 
+	public String validateCustomer(LoginRequest u) {
+		Customer cust = null;
+		String result = "";
 
-	public String validateCustomer(Customer cust) {
-		String result;
-		Optional<Customer> o = custRepo.findById((cust.getCustomerId()));
+		Optional<Customer> obj = custRepo.findById(u.getCustomerId());
 
-		if(o.isPresent()){
-			//Create a JWT Token
-			result = "Login Successful";
+		if (obj.isPresent()) {
+			cust = obj.get();
 		}
-		else{
-			result = "Login Failed";
+		if (cust == null) {
+			result = "Invalid Customer";
+		} else {
+			if (u.getPassword().equals(cust.getPassword())) {
+				result = "Login success";
+			} else {
+				result = "Login failed";
+			}
 		}
 		return result;
 	}

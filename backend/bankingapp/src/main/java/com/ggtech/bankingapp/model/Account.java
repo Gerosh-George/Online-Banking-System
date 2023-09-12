@@ -16,15 +16,14 @@ import javax.persistence.Table;
 public class Account {
 
 	@Id
-	@GeneratedValue
 	@Column(name="Account_no")
-	private int accountNo;
+	private long accountNo;
 
 	@Column(nullable=false)
 	private String accountType;
 
 	@Column(nullable=false)
-	private int balance;
+	private double balance;
 
 	@Column(nullable=false)
 	private String branch;
@@ -35,7 +34,7 @@ public class Account {
 	@Column(nullable=false)
 	private boolean isdisabled;
 
-	@Column(nullable=true)
+	@Column()
 	private LocalDateTime openeingDate;
 
 	@ManyToOne
@@ -44,11 +43,11 @@ public class Account {
 
 
 
-	public int getAccountNo() {
+	public long getAccountNo() {
 		return accountNo;
 	}
 
-	public void setAccountNo(int accountNo) {
+	public void setAccountNo(long accountNo) {
 		this.accountNo = accountNo;
 	}
 
@@ -60,11 +59,11 @@ public class Account {
 		this.accountType = accountType;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
@@ -84,11 +83,11 @@ public class Account {
 		this.ifsc = ifsc;
 	}
 
-	public boolean isIsdisabled() {
+	public boolean isDisabled() {
 		return isdisabled;
 	}
 
-	public void setIsdisabled(boolean isdisabled) {
+	public void setDisabled(boolean isdisabled) {
 		this.isdisabled = isdisabled;
 	}
 
@@ -96,6 +95,9 @@ public class Account {
 		return openeingDate;
 	}
 
+	public void setOpeneingDate(LocalDateTime openeingDate) {
+		this.openeingDate = openeingDate;
+	}
 
 	public Customer getCustomer() {
 		return customer;

@@ -125,7 +125,7 @@ const Registration = () => {
       />
       <br></br>
       <br></br>
-      <button type="submit">Login</button>
+      <button type="submit">Submit</button>
       &nbsp;&nbsp;&nbsp;
       <button type="reset" onClick={() => cancelHandler()}>
         Cancel

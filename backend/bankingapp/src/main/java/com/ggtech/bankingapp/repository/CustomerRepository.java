@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ggtech.bankingapp.model.Customer;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, String> {
-	//Implement method to get ALl Users
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+	
 }

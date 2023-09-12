@@ -7,5 +7,5 @@ import com.ggtech.bankingapp.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, String> {
-	
+	//Implement method to get ALl Users
 }

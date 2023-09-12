@@ -88,12 +88,14 @@ const FormComponent = () => {
         >
           Login
         </Button>
-        <Typography>
-          <Link href="#">Forgot Password</Link>
-        </Typography>
-        <Typography>
-          Become Customer : <Link href="#">Sign Up</Link>
-        </Typography>
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+          <Typography>
+            <Link href="#">Forgot Password</Link>
+          </Typography>
+          <Typography>
+            Become Customer : <Link href="#">Sign Up</Link>
+          </Typography>
+        </div>
       </Paper>
     </Grid>
   );

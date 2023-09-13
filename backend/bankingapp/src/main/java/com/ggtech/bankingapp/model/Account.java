@@ -1,43 +1,41 @@
 package com.ggtech.bankingapp.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
 public class Account {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Account_no")
 	private long accountNo;
 
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private String accountType;
 
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private double balance;
 
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private String branch;
 
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private String ifsc;
 
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private boolean isdisabled;
 
 	@Column()
 	private LocalDateTime openeingDate;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name="customerId")
 	private Customer customer;
 

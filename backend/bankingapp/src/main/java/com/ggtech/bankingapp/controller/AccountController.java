@@ -6,16 +6,25 @@ import com.ggtech.bankingapp.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.service.AccountsService;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AccountController {
 
     @Autowired
     AccountsService accountsService;
+
+
+    @GetMapping("/accountHello")
+    @CrossOrigin
+    public String accountHello(){
+        return "Account HElllo";
+    }
 
 
     @PostMapping("/createAccount/{uid}")
@@ -30,6 +39,7 @@ public class AccountController {
             result = "Account creation failed!";
         return result;
     }
+
 
     @GetMapping("/fetchTransactions/{accno}")
     public List<Transaction> fetchTransactions(@PathVariable("accno") long accno) throws NoDataFoundException

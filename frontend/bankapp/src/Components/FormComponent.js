@@ -36,7 +36,7 @@ const FormComponent = () => {
 
   const submitActionHandler = (event) => {
     event.preventDefault();
-    const baseURL = "http://localhost:8080/hello";
+    const baseURL = "http://localhost:8080/login";
     console.log(event);
     axios
       .post(baseURL, {
@@ -45,7 +45,7 @@ const FormComponent = () => {
       })
       .then((response) => {
         console.log(response);
-        alert(response.data.message);
+        alert(response.data);
 
         //navigate("/account");
       })

@@ -22,17 +22,14 @@ const AccountPage = () => {
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
 
-  const baseURL = "http://localhost:8080/hello";
+  const baseURL = "http://localhost:8080/createAccount/1";
   const navigate = useNavigate();
 
-  
   const [accountType, setAccountType] = useState("");
   const [openingDate, setOpeningDate] = useState("");
   const [ifsc, setIfsc] = useState("");
   const [branch, setBranch] = useState("");
-  
 
-  
   const accountTypeHandler = (event) => {
     setAccountType(event.target.value);
   };
@@ -49,16 +46,19 @@ const AccountPage = () => {
     setBranch(event.target.value);
   };
 
-
   const submitActionHandler = (event) => {
     event.preventDefault();
+    axios
+      .get("http://localhost:8080/accountHello")
+      .then((res) => console.log(res.data));
     console.log(event);
     axios
       .post(baseURL, {
+        customerId: 1,
         accountType,
         ifsc,
         openingDate,
-        branch
+        branch,
       })
       .then((response) => {
         console.log(response);
@@ -102,10 +102,7 @@ const AccountPage = () => {
             _changeHandler={branchHandler}
           />
         </Grid>
-       
 
-     
-       
         <Grid item xs={12}>
           <InputComponent
             _id={"Account Opening Date"}

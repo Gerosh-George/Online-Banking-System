@@ -103,7 +103,7 @@ const Registration = () => {
   };
   return (
     <>
-    <NavBar />
+      <NavBar />
       <Grid xs={12}>
         <Paper elevation={10} style={paperStyle}>
           <Grid item align="center">
@@ -135,30 +135,9 @@ const Registration = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <InputComponent
-              _id={"Email"}
-              _value={email}
-              _placeholder={"Enter Email "}
-              _changeHandler={emailHandler}
-            />
+            <Button color="secondary">Next</Button>
           </Grid>
-
-          <Grid item xs={12}>
-            <InputComponent
-              _id={"Aadhaar"}
-              _value={aadhar}
-              _placeholder={"Enter Aadhar Number"}
-              _changeHandler={aadharHandler}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <InputComponent
-              _id={"Date Of Birth"}
-              _value={dob}
-              _placeholder={"Enter DOB"}
-              _changeHandler={dobHandler}
-            />
-          </Grid>
+          
 
           <Button
             type="submit"

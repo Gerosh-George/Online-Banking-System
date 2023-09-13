@@ -57,7 +57,6 @@ const FormComponent = () => {
 
   return (
     <>
-      {" "}
       <NavBar />
       <Grid>
         <Paper elevation={10} style={paperStyle}>

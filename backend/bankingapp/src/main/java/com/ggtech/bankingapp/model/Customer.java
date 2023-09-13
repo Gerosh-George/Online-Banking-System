@@ -39,6 +39,7 @@ public class Customer {
 	private String aadhar;
 	
 	@Column(nullable=false)
+	//pattern='YYYY-MM-DD'
 	private String dob;
 
 	private String address;

@@ -1,11 +1,9 @@
 package com.ggtech.bankingapp.controller;
 
+import com.ggtech.bankingapp.exceptions.ResourceNotFoundException;
 import com.ggtech.bankingapp.model.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,6 +11,8 @@ import com.ggtech.bankingapp.model.Customer;
 import com.ggtech.bankingapp.service.CustomerService;
 import com.ggtech.bankingapp.util.Validator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -39,7 +39,6 @@ public class CustomerController {
 				return "Incorrect Dob Format";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "Incorrect date";
 		}
 		Customer user = objectMapper.treeToValue(jsonNode, Customer.class);
@@ -49,17 +48,17 @@ public class CustomerController {
 				email=jsonNode.get("email").asText(),
 				aadhar=jsonNode.get("aadhar").asText(),
 				dob=jsonNode.get("dob").asText();
-		Long mobile=jsonNode.get("name").asLong();
+		long mobile=jsonNode.get("name").asLong();
 
 		String address="",fathername="",mothername="";
 		if(jsonNode.has("address"))
-		address=jsonNode.get("address").asText();
+			address=jsonNode.get("address").asText();
 
-		if(jsonNode.has("address"))
-		address=jsonNode.get("address").asText();
+		if(jsonNode.has("fathername"))
+			fathername=jsonNode.get("fathername").asText();
 
-		if(jsonNode.has("address"))
-		address=jsonNode.get("address").asText();
+		if(jsonNode.has("mothername"))
+			mothername=jsonNode.get("mothername").asText();
 		user.setName(name);
 		user.setPassword(password);
 		user.setMobile(mobile);
@@ -77,4 +76,10 @@ public class CustomerController {
 	public String validateCustomer(@RequestBody LoginRequest u) {
 		return custService.validateCustomer(u);
 	}
+
+	@GetMapping("/customer/{cid}")
+	public Customer getCustomer(@PathVariable("cid") long customerId) throws ResourceNotFoundException {
+		return custService.getCustomer(customerId);
+	}
+
 }

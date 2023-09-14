@@ -4,6 +4,7 @@ package com.ggtech.bankingapp.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -103,6 +104,16 @@ public class Account {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	@OneToMany(mappedBy="acc_no", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Transaction> transaction;
+	public List<Transaction> getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(List<Transaction> transaction) {
+		this.transaction = transaction;
 	}
 
 

@@ -11,5 +11,5 @@ import com.ggtech.bankingapp.model.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 	@Query("select account from Account account where account.customer.customerId=?1")
-	public List<Account> findByUsername(String username);
+	public List<Account> findByUsername(long username);
 }

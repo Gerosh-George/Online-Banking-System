@@ -20,14 +20,8 @@ public class AccountController {
     AccountsService accountsService;
 
 
-    @GetMapping("/accountHello")
-    @CrossOrigin
-    public String accountHello(){
-        return "Account HElllo";
-    }
 
-
-    @PostMapping("/createAccount/{uid}")
+    @PostMapping("/account/{uid}")
     public String createAccount(@RequestBody Account account, @PathVariable("uid") Long userid)
     {
         String result = "";
@@ -40,12 +34,24 @@ public class AccountController {
         return result;
     }
 
+    @GetMapping("/account/{uid}")
+    public String getAccount(@RequestBody Account account, @PathVariable("uid") Long userid)
+    {
+        String result = "";
+        Account acc = accountsService.createAccount(account, userid);
 
-    @GetMapping("/fetchTransactions/{accno}")
+        if(acc != null)
+            result = "Account created!";
+        else
+            result = "Account creation failed!";
+        return result;
+    }
+
+
+    @GetMapping("/transactions/{accno}")
     public List<Transaction> fetchTransactions(@PathVariable("accno") long accno) throws NoDataFoundException
     {
-        List<Transaction> result = accountsService.fetchTransactions(accno);
-        return result;
+        return accountsService.fetchTransactions(accno);
     }
 
     @GetMapping("/getAccountDetails/{accno}")

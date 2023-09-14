@@ -18,8 +18,8 @@ export default function NavBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Wells Fargo
             </Typography>
-            <Button color="inherit">Login</Button>
-            <Button color="inherit">Register</Button>
+            <Button color="inherit"><Link to="/Login">Login</Link></Button>
+            <Button color="inherit"><Link to="/Registration">Register</Link></Button>
           </Toolbar>
         </AppBar>
       </Box>

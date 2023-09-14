@@ -7,3 +7,4 @@ export const getAccountDetails = async (accountNumber) => {
     console.log(data);
     return data;
 }
+

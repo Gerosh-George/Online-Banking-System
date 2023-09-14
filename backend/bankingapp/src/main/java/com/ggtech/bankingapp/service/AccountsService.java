@@ -64,4 +64,10 @@ public class AccountsService {
             return acc;
     }
 
+    public double checkBalance(long accno)
+    {
+        double balance = accountsRepo.findById(accno).get().getBalance();
+        return balance;
+    }
+
 }

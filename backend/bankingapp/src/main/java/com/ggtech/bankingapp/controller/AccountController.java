@@ -59,4 +59,10 @@ public class AccountController {
     {
         return accountsService.getAccountDetails(accno);
     }
+
+    @GetMapping("/checkBalance/{accno}")
+    public double checkBalance(@PathVariable("accno") long accno)
+    {
+        return accountsService.checkBalance(accno);
+    }
 }

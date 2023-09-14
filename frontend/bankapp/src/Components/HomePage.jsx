@@ -1,15 +1,23 @@
-import React from 'react'
-import {Link} from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
+import { Grid, Box } from "@mui/material";
+import banner from "../../src/banner.jpg";
 
 function HomePage() {
   return (
     <>
-      <div>HomePage</div>
-      <Link to="/account">Account</Link>
-
-     </>
-
-  )
+      <NavBar />
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <img src={banner} alt="Logo" height={"500px"} />
+      </Grid>
+    </>
+  );
 }
 
-export default HomePage
+export default HomePage;

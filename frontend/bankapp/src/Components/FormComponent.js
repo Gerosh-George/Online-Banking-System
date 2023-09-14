@@ -39,6 +39,7 @@ const FormComponent = () => {
     event.preventDefault();
     const baseURL = "http://localhost:8080/login";
     console.log(event);
+    sessionStorage.setItem("customerId", customerId);
     axios
       .post(baseURL, {
         customerId: customerId,

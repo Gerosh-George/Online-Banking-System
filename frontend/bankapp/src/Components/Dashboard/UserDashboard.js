@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "styled-components";
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 import AccountDetails from "./AccountDetails";
+import { getAccountDetails } from "../../utils/GetRequests";
 
 const DashboardContainer = styled(Container)`
   background-color: #f5f5f5;
@@ -62,6 +63,9 @@ const RecentTransactionsCard = styled(Card)`
 `;
 
 const UserDashboard = () => {
+  useEffect(() => {
+    getAccountDetails(2);
+  },[])
   return (
     <DashboardContainer fluid>
       <Row>

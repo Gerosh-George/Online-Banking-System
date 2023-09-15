@@ -128,15 +128,29 @@ const Registration = () => {
           </Grid>
           <Grid item xs={12}>
             <InputComponent
-              _id={"Mobile"}
-              _value={mobile}
-              _placeholder={"Enter Mobile Number"}
-              _changeHandler={mobileHandler}
+              _id={"Aadhar Number"}
+              _value={aadhar}
+              _placeholder={"Enter Aadhar Number"}
+              _changeHandler={aadharHandler}
             />
           </Grid>
           <Grid item xs={12}>
-            <Button color="secondary">Next</Button>
+            <InputComponent
+              _id={"Email"}
+              _value={mobile}
+              _placeholder={"Enter Email"}
+              _changeHandler={emailHandler}
+            />
           </Grid>
+          <Grid item xs={12}>
+            <InputComponent
+              _id={"DOB"}
+              _value={dob}
+              _placeholder={"Enter DOB"}
+              _changeHandler={dobHandler}
+            />
+          </Grid>
+         
           
 
           <Button

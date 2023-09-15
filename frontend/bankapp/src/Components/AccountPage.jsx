@@ -22,7 +22,7 @@ const AccountPage = () => {
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
 
-  const baseURL = "http://localhost:8080/createAccount/1";
+  const baseURL = "http://localhost:8080/createAccount/2";
   const navigate = useNavigate();
 
   const [accountType, setAccountType] = useState("");
@@ -54,7 +54,6 @@ const AccountPage = () => {
     console.log(event);
     axios
       .post(baseURL, {
-        customerId: 1,
         accountType,
         ifsc,
         openingDate,

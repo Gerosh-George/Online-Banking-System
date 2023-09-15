@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 import {
   Grid,
   Paper,
@@ -24,6 +25,7 @@ const FormComponent = () => {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+  const navigate = useNavigate();
 
   const customerIdChangeHandler = (event) => {
     //alert(event.target.value);
@@ -39,6 +41,7 @@ const FormComponent = () => {
     event.preventDefault();
     const baseURL = "http://localhost:8080/login";
     console.log(event);
+    sessionStorage.setItem("customerId", customerId);
     axios
       .post(baseURL, {
         customerId: customerId,
@@ -48,7 +51,7 @@ const FormComponent = () => {
         console.log(response);
         alert(response.data);
 
-        //navigate("/account");
+        navigate("/UserDashboard");
       })
       .catch((error) => {
         alert("error===" + error);
@@ -57,7 +60,7 @@ const FormComponent = () => {
 
   return (
     <>
-      <NavBar />
+      
       <Grid>
         <Paper elevation={10} style={paperStyle}>
           <Grid item align="center">

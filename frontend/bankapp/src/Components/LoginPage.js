@@ -7,7 +7,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [customerId, setCustomerId] = useState('');
   const [password, setPassword] = useState('');
-  
 
   const customerIdChangeHandler = (event) => {
     //alert(event.target.value);

@@ -5,8 +5,9 @@ import AccountPage from "./Components/AccountPage";
 import LoginPage from "./Components/LoginPage";
 import Registration from "./Components/Registration";
 import FormComponent from "./Components/FormComponent";
-import UserDashboard from "./Components/UserDashboard";
+import UserDashboard from "./Components/Dashboard/UserDashboard";
 import NavBar from "./Components/NavBar";
+import Layout from "./Components/Dashboard/Layout";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route exact path="/" element={<HomePage />} />
-            <Route exact path="/home" element={<UserDashboard />} />
+            <Route exact path="/userdashboard" element={<Layout />} />
 
             <Route exact path="/account" element={<AccountPage />} />
             <Route exact path="/login" element={<FormComponent />} />

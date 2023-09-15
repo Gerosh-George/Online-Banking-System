@@ -1,5 +1,7 @@
 package com.ggtech.bankingapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import  javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,6 +25,7 @@ public class Transaction {
 	private String status;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name="accno")
 	private Account acc_no;
 

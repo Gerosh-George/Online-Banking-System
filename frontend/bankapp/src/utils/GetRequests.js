@@ -1,9 +1,12 @@
-export const getAccountDetails = async (accountNumber) => {
+export const getAccountDetails = async (accountNumber,setAccountDetails) => {
+  try {
     const response = await fetch(
-        `http://localhost:8080/getAccountDetails/${accountNumber}`
+      `http://localhost:8080/getAccountDetails/${accountNumber}`
     );
     const data = await response.json();
-
     console.log(data);
-    return data;
-}
+    setAccountDetails(data);
+  } catch (error) {
+    console.log(error);
+  }
+};

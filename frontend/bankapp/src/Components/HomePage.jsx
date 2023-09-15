@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import { Grid, Box } from "@mui/material";
-import banner from "../../src/banner.jpg";
+import banner from "../banner.jpg";
 
 function HomePage() {
   return (

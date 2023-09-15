@@ -33,7 +33,7 @@ const Sidebar = () => {
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="#">Withdraw</NavLink>
+        <NavLink href="/withdraw">Withdraw</NavLink>
       </NavItem>
       <NavItem>
         <NavLink href="#">Transfer Money</NavLink>

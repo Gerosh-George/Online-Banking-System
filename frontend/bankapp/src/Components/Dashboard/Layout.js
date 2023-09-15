@@ -4,11 +4,15 @@ import Sidebar from "./SideBar"; // Import your Sidebar component
 import UserDashboard from "./UserDashboard";
 import NavBar from "../NavBar";
 import Appbar from "./Appbar";
+import AccountDetails from "./AccountDetails";
+import AccountDetailsModal from "./AccountDetailsModal";
 
 const Layout = () => {
+  
   return (
     <>
       <Appbar />
+    
       <Container fluid>
         <Row>
           <Col md={3}>

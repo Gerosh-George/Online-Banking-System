@@ -1,8 +1,9 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 import AccountDetails from "./AccountDetails";
 import { getAccountDetails } from "../../utils/GetRequests";
+import AccountDetailsModal from "./AccountDetailsModal";
 
 const DashboardContainer = styled(Container)`
   background-color: #f5f5f5;
@@ -61,25 +62,46 @@ const RecentTransactionsCard = styled(Card)`
     border-top-right-radius: 0;
   }
 `;
+const accountDetails = {
+  accountNumber: 1234567890,
+  accountType: "Savings",
+  balance: 1000,
+};
 
 const UserDashboard = () => {
+  const [accountDetails, setAccountDetails] = useState({});
+  const [ showAccountDetails, setShowAccountDetails ] = useState(false);
   useEffect(() => {
-    getAccountDetails(2);
-  },[])
+    getAccountDetails(2, setAccountDetails);
+  }, []);
+  const handleToggle = () => {  
+    setShowAccountDetails(!showAccountDetails);
+  };
   return (
-    <DashboardContainer fluid>
-      <Row>
-        <Col md={3}>
-          <UserCard>
-            <Card.Body>
-              <h5 className="mb-3">Welcome, User!</h5>
-              <p>
-                <strong>Account Balance:</strong> $1,000.00
-              </p>
-              <Button variant="primary">View Account Details</Button>
-            </Card.Body>
-          </UserCard>
-          {/* <QuickLinksCard>
+    <>
+      <AccountDetailsModal
+        show={showAccountDetails}
+        onHide={setShowAccountDetails}
+        accountDetails={accountDetails}
+      />
+      <DashboardContainer fluid>
+        <Row>
+          <Col md={3}>
+            <UserCard>
+              <Card.Body>
+                <h5 className="mb-3">Welcome, User!</h5>
+                <p>
+                  <strong>Account Balance:</strong> {accountDetails.balance}
+                </p>
+                <Button
+                  variant="primary"
+                  onClick={handleToggle}
+                >
+                  View Account Details
+                </Button>
+              </Card.Body>
+            </UserCard>
+            {/* <QuickLinksCard>
             <Card.Body>
               <h6>Quick Links</h6>
               <ul>
@@ -89,31 +111,31 @@ const UserDashboard = () => {
               </ul>
             </Card.Body>
           </QuickLinksCard> */}
-        </Col>
-        <Col md={9}>
-          <RecentTransactionsCard>
-            <Card.Header className="bg-primary text-white">
-              Recent Transactions
-            </Card.Header>
-            <Card.Body>
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Map through recent transactions data and display here */}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </RecentTransactionsCard>
-          
-        </Col>
-      </Row>
-    </DashboardContainer>
+          </Col>
+          <Col md={9}>
+            <RecentTransactionsCard>
+              <Card.Header className="bg-primary text-white">
+                Recent Transactions
+              </Card.Header>
+              <Card.Body>
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Map through recent transactions data and display here */}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </RecentTransactionsCard>
+          </Col>
+        </Row>
+      </DashboardContainer>
+    </>
   );
 };
 

@@ -8,6 +8,7 @@ import FormComponent from "./Components/FormComponent";
 import UserDashboard from "./Components/Dashboard/UserDashboard";
 import NavBar from "./Components/NavBar";
 import Layout from "./Components/Dashboard/Layout";
+import WithdrawalComponent from "./Components/Dashboard/WithdrawalComponent";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route exact path="/account" element={<AccountPage />} />
             <Route exact path="/login" element={<FormComponent />} />
             <Route exact path="/registration" element={<Registration />} />
+            <Route exact path="/withdrawal" element={<WithdrawalComponent />} />
           </Routes>
         </BrowserRouter>
       

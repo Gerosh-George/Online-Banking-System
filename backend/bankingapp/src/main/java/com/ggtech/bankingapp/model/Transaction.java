@@ -25,6 +25,7 @@ public class Transaction {
 	private String status;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name="accno")
 	@JsonBackReference
 	private Account acc_no;

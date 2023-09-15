@@ -9,11 +9,9 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table
 public class Account {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Account_no")
 	private long accountNo;
 

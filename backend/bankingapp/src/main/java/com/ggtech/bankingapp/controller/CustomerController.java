@@ -82,4 +82,14 @@ public class CustomerController {
 		return custService.getCustomer(customerId);
 	}
 
+	@PutMapping("/changePassword/{otp}")
+	public String changePassword(@RequestBody LoginRequest u, @PathVariable("otp") String otp) {
+		return custService.resetPassword(u, otp);
+	}
+
+	@PutMapping("/changeDetails")
+	public String changeDetails(@RequestBody Customer u) {
+		return custService.updateCustomerDetails(u);
+	}
+
 }

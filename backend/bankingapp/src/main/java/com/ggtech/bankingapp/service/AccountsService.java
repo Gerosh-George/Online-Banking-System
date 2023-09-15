@@ -35,7 +35,7 @@ public class AccountsService {
         {
             generatedNumber = Math.abs(9999999 + rand.nextLong());
         }
-        Customer u = customerRepository.findById(userid).get();
+        Customer u = customerRepository.findById(userid).orElse(null);
         String branch = account.getBranch();
         String ifsc = branch.substring(0, 3) + (int)(branch.charAt(branch.length()-1)) + (int)(branch.charAt(branch.length()-2));
         account.setCustomer(u);
@@ -66,8 +66,13 @@ public class AccountsService {
 
     public double checkBalance(long accno)
     {
-        double balance = accountsRepo.findById(accno).get().getBalance();
-        return balance;
+        return accountsRepo.findById(accno).get().getBalance();
+    }
+
+    public List<Account> getUserAccounts(long uid){
+        Customer cust = customerRepository.findById(uid).orElse(null);
+        assert cust != null;
+        return cust.getAccount();
     }
 
 }

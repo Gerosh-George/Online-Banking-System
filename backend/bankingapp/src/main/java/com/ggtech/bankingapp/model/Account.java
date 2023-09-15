@@ -35,7 +35,7 @@ public class Account {
 
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name="customerId")
+	@JoinColumn(name="customer")
 	private Customer customer;
 
 

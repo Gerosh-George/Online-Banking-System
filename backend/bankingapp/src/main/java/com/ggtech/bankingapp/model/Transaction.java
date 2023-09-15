@@ -26,7 +26,7 @@ public class Transaction {
 	
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name="Account_no")
+	@JoinColumn(name="acc_no")
 	private Account acc_no;
 
 	public long getTransactionId() {

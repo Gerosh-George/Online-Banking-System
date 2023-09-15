@@ -130,9 +130,9 @@ class AccountsServiceTest {
      */
     @Test
     void testFetchTransactions() throws NoDataFoundException {
-        when(transactionRepository.findByAccountNumber(anyLong(), Mockito.<String>any())).thenReturn(new ArrayList<>());
+        when(transactionRepository.findByAccountNumber(anyLong())).thenReturn(new ArrayList<>());
         assertThrows(NoDataFoundException.class, () -> accountsService.fetchTransactions(1L));
-        verify(transactionRepository).findByAccountNumber(anyLong(), Mockito.<String>any());
+        verify(transactionRepository).findByAccountNumber(anyLong());
     }
 
     /**
@@ -175,11 +175,11 @@ class AccountsServiceTest {
 
         ArrayList<Transaction> transactionList = new ArrayList<>();
         transactionList.add(transaction);
-        when(transactionRepository.findByAccountNumber(anyLong(), Mockito.<String>any())).thenReturn(transactionList);
+        when(transactionRepository.findByAccountNumber(anyLong())).thenReturn(transactionList);
         List<Transaction> actualFetchTransactionsResult = accountsService.fetchTransactions(1L);
         assertSame(transactionList, actualFetchTransactionsResult);
         assertEquals(1, actualFetchTransactionsResult.size());
-        verify(transactionRepository, atLeast(1)).findByAccountNumber(anyLong(), Mockito.<String>any());
+        verify(transactionRepository, atLeast(1)).findByAccountNumber(anyLong());
     }
 
     /**

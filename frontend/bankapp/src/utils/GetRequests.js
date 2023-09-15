@@ -10,3 +10,4 @@ export const getAccountDetails = async (accountNumber,setAccountDetails) => {
     console.log(error);
   }
 };
+

@@ -48,11 +48,11 @@ public class AccountsService {
 
     public List<Transaction> fetchTransactions(long accno) throws NoDataFoundException
     {
-        if(transactionRepository.findByAccountNumber(accno, "SUCCESS").isEmpty())
+        if(transactionRepository.findByAccountNumber(accno).isEmpty())
         {
             throw new NoDataFoundException("No Transactions to Display");
         }
-        return transactionRepository.findByAccountNumber(accno, "SUCCESS");
+        return transactionRepository.findByAccountNumber(accno);
     }
 
     public Account getAccountDetails(long accno) throws ResourceNotFoundException

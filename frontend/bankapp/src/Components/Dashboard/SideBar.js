@@ -42,6 +42,9 @@ const Sidebar = () => {
         <NavLink href="#">Transaction History</NavLink>
       </NavItem>
       <NavItem>
+        <NavLink href="/account">New Account</NavLink>
+      </NavItem>
+      <NavItem>
         <NavLink href="#">Account Details</NavLink>
       </NavItem>
     </StyledSidebar>

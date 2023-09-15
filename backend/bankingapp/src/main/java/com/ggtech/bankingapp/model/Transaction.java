@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import  javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
 
 
 
@@ -14,18 +16,23 @@ import javax.persistence.ManyToOne;
 public class Transaction {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
+
+	@NotEmpty(message = "transType cannot be empty")
 	private String transType;
+
+	@NotEmpty(message = "amount cannot be empty")
 	private double amount;
 	
 	private long accFrom;
+
+	@NotEmpty(message = "accTo cannot be empty")
 	private long accTo;
 	private String timestamp;
 	private String status;
 	
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name="accno")
 	@JsonBackReference
 	private Account acc_no;

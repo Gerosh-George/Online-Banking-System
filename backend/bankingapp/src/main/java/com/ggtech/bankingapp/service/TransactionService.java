@@ -73,8 +73,7 @@ public class TransactionService {
     public List<Transaction> accountSummary(long accno)
     {
         List<Transaction> transactionList= transRepo.findByAccountNumber(accno);
-        List <Transaction> summary=transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(5).collect(Collectors.toList());
-        return summary;
+        return transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(5).collect(Collectors.toList());
     }
 
 }

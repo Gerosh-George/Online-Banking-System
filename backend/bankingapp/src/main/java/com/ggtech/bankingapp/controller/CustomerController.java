@@ -48,7 +48,7 @@ public class CustomerController {
 				email=jsonNode.get("email").asText(),
 				aadhar=jsonNode.get("aadhar").asText(),
 				dob=jsonNode.get("dob").asText();
-		long mobile=jsonNode.get("name").asLong();
+		long mobile=jsonNode.get("mobile").asLong();
 
 		String address="",fathername="",mothername="";
 		if(jsonNode.has("address"))

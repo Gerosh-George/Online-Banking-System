@@ -41,7 +41,7 @@ public class AccountsService {
         account.setCustomer(u);
         account.setAccountNo(generatedNumber);
         account.setIfsc(ifsc);
-        account.setDisabled(false);
+        account.setDisabled(true);
         return accountsRepo.save(account);
     }
 

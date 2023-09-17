@@ -15,19 +15,19 @@ public class Account {
 	@Column(name="Account_no")
 	private long accountNo;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String accountType;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private double balance;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String branch;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String ifsc;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private boolean isdisabled;
 
 	@Column()

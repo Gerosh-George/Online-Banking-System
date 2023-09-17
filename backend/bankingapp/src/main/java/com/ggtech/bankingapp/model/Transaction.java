@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -21,7 +22,7 @@ public class Transaction {
 	
 	private long accFrom;
 	private long accTo;
-	private String timestamp;
+	private Date timestamp;
 	private String status;
 	
 	@ManyToOne
@@ -69,11 +70,11 @@ public class Transaction {
 		this.accTo = accTo;
 	}
 
-	public String getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

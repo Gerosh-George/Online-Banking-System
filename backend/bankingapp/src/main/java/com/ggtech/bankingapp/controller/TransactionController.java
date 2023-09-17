@@ -3,11 +3,12 @@ package com.ggtech.bankingapp.controller;
 import com.ggtech.bankingapp.model.Transaction;
 import com.ggtech.bankingapp.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -27,4 +28,15 @@ public class TransactionController {
             result = "Transaction Success";
         return result;
     }
+    @GetMapping ("/accountStatement/{accno}/{startDate}/{endDate}")
+    public List<Transaction> accountStatement(@PathVariable("accno") long accno, @PathVariable ("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, @PathVariable("endDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) throws ParseException {
+        return transService.accountStatement(startDate, endDate, accno);
+    }
+
+    @GetMapping("/accountSummary/{accno}")
+    public List<Transaction> accountSummary(@PathVariable("accno") long accno)
+    {
+        return transService.accountSummary(accno);
+    }
+
 }

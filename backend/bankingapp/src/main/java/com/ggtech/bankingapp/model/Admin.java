@@ -1,12 +1,19 @@
 package com.ggtech.bankingapp.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Admin {
     @Id
+    @NotEmpty(message = "Name cannot be empty")
+    @Column(nullable=false)
     private String userid;
+
+    @NotEmpty(message = "Name cannot be empty")
+    @Column(nullable=false)
     private String password;
 
     public String getUserid() {

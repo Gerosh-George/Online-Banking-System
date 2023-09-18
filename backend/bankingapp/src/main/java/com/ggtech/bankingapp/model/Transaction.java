@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 
@@ -33,8 +35,8 @@ public class Transaction {
 	private String status;
 	
 	@ManyToOne
-	@JoinColumn(name="accno")
 	@JsonBackReference
+	@JoinColumn(name="accno")
 	private Account acc_no;
 
 	public long getTransactionId() {

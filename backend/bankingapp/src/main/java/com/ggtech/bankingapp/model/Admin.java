@@ -8,11 +8,9 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 public class Admin {
     @Id
-    @NotEmpty(message = "Name cannot be empty")
     @Column(nullable=false)
     private String userid;
 
-    @NotEmpty(message = "Name cannot be empty")
     @Column(nullable=false)
     private String password;
 

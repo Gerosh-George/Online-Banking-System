@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/admin")
@@ -18,12 +20,12 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping("/save")
-    public String saveAdmin(@RequestBody Admin admin) {
+    public String saveAdmin(@Valid @RequestBody Admin admin) {
         return adminService.saveAdmin(admin);
     }
 
     @PostMapping("/login")
-    public String adminLogin(@RequestBody Admin admin) {
+    public String adminLogin(@Valid @RequestBody Admin admin) {
         return adminService.login(admin);
     }
 
@@ -39,12 +41,12 @@ public class AdminController {
     }
 
     @PostMapping("updateBalance")
-    public String updateBalance(@RequestBody AddBalanceRequest req) {
+    public String updateBalance(@Valid @RequestBody AddBalanceRequest req) {
         return adminService.updateCustomerBalance(req.getAccno(), req.getAmount());
     }
 
     @PostMapping("addFund")
-    public String addFund(@RequestBody AddBalanceRequest req) {
+    public String addFund(@Valid @RequestBody AddBalanceRequest req) {
         return adminService.addCustomerBalance(req.getAccno(),req.getAmount());
     }
 

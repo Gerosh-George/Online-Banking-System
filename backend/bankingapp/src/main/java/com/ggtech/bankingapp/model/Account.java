@@ -30,7 +30,6 @@ public class Account {
 	@Column(nullable=false)
 	private boolean isdisabled;
 
-	@Column()
 	private LocalDateTime openeingDate;
 
 	@ManyToOne

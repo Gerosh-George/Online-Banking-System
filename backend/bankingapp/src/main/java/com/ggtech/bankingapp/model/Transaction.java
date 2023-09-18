@@ -2,6 +2,7 @@ package com.ggtech.bankingapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import javax.persistence.Column;
 import  javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,16 +21,17 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
 
-	@NotEmpty(message = "transType cannot be empty")
+	@Column(nullable=false)
 	private String transType;
 
-	@NotEmpty(message = "amount cannot be empty")
+	@Column(nullable=false)
 	private double amount;
 	
 	private long accFrom;
 
-	@NotEmpty(message = "accTo cannot be empty")
+	@Column(nullable=false)
 	private long accTo;
+	
 	private Date timestamp;
 	private String status;
 	

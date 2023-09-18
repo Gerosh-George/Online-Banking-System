@@ -10,8 +10,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 
@@ -22,23 +30,26 @@ public class Customer {
 	private long customerId;
 	
 	@Column(nullable=false)
+	@Length(min=1,message="Name can't be empty")
 	private String name;
 	
 	@Column(nullable=false)
 	@Length(min=8, max=20, message="Password must be between 8 to 20 characters")
 	private String password;
 
+	@Pattern(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @Column(nullable=false)
 	private String email;
 
 	@Column(nullable=false)
 	private long mobile;
 	
+	@Pattern(message = "aadhar is not valid", regexp = "\\d{12}")
 	@Column(nullable=false)
 	private String aadhar;
 	
+	@Pattern(message = "dob is not valid", regexp = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$")
 	@Column(nullable=false)
-	//pattern='YYYY-MM-DD'
 	private String dob;
 
 	private String address;

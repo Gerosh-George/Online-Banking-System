@@ -1,7 +1,16 @@
 package com.ggtech.bankingapp.model;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+
 public class AddBalanceRequest {
+
+    @Column(nullable=false)
+    @NotNull(message = "accno can't be Empty")
     private long accno;
+
+    @Column(nullable=false)
+    @NotNull(message = "amount can't be Empty")
     private double amount;
 
     public long getAccno() {

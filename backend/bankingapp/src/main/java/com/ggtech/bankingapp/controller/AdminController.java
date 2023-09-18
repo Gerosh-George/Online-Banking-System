@@ -1,6 +1,7 @@
 package com.ggtech.bankingapp.controller;
 
 import com.ggtech.bankingapp.model.Account;
+import com.ggtech.bankingapp.model.AddBalanceRequest;
 import com.ggtech.bankingapp.model.Admin;
 import com.ggtech.bankingapp.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,14 @@ public class AdminController {
         return adminService.getAccounts();
     }
 
-    @PostMapping("updateBalance/{accno}/{bal}")
-    public String updateBalance(@PathVariable("accno") long accno, @PathVariable("bal") double bal) {
-        return adminService.updateCustomerBalance(accno, bal);
+    @PostMapping("updateBalance")
+    public String updateBalance(@RequestBody AddBalanceRequest req) {
+        return adminService.updateCustomerBalance(req.getAccno(), req.getAmount());
     }
 
-    @PostMapping("addFund/{accno}/{bal}")
-    public String addFund(@PathVariable("accno") long accno, @PathVariable("bal") double bal) {
-        return adminService.addCustomerBalance(accno, bal);
+    @PostMapping("addFund")
+    public String addFund(@RequestBody AddBalanceRequest req) {
+        return adminService.addCustomerBalance(req.getAccno(),req.getAmount());
     }
 
 

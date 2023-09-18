@@ -53,7 +53,7 @@ class AccountsServiceTest {
      * Method under test: {@link AccountsService#createAccount(Account, Long)}
      */
     @Test
-    void testCreateAccount() {
+    void testCreateAccount() throws NoDataFoundException {
         Customer customer = new Customer();
         customer.setAadhar("Aadhar");
         customer.setAccount(new ArrayList<>());

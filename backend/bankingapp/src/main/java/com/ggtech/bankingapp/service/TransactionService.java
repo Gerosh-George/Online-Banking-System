@@ -24,8 +24,10 @@ public class TransactionService {
     @Autowired
     AccountRepository accRepo;
 
-    public Transaction transact(Transaction trans)
-    {
+    public Transaction transact(Transaction trans) throws Exception {
+        if(trans.getAccFrom()==trans.getAccTo()){
+            throw new Exception("Transferring funds to same account number not allowed");
+        }
         long accnumber = trans.getAccFrom();
         long toAccNum = trans.getAccTo();
         Account acc = accRepo.findById(accnumber).get();

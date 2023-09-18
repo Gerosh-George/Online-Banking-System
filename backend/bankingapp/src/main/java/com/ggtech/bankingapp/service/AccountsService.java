@@ -27,7 +27,7 @@ public class AccountsService {
     TransactionRepository transactionRepository;
 
 
-    public Account createAccount(Account account, Long userid) {
+    public Account createAccount(Account account, Long userid) throws NoDataFoundException {
         long generatedNumber = 0;
         Random rand = new Random();
         generatedNumber = Math.abs(999999 + rand.nextLong());
@@ -36,6 +36,9 @@ public class AccountsService {
             generatedNumber = Math.abs(9999999 + rand.nextLong());
         }
         Customer u = customerRepository.findById(userid).orElse(null);
+        if(u==null){
+            throw new NoDataFoundException("Customer with this id doesn't exist");
+        }
         String branch = account.getBranch();
         String ifsc = branch.substring(0, 3) + (int)(branch.charAt(branch.length()-1)) + (int)(branch.charAt(branch.length()-2));
         account.setCustomer(u);

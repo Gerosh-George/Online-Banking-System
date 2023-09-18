@@ -22,8 +22,7 @@ public class AccountController {
 
 
     @PostMapping("/account/{uid}")
-    public String createAccount(@RequestBody Account account, @PathVariable("uid") Long userid)
-    {
+    public String createAccount(@RequestBody Account account, @PathVariable("uid") Long userid) throws NoDataFoundException {
         String result = "";
         Account acc = accountsService.createAccount(account, userid);
 

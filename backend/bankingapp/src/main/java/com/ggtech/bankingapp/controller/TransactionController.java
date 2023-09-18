@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.controller;
 
+import com.ggtech.bankingapp.model.AccountStatement;
 import com.ggtech.bankingapp.model.Transaction;
 import com.ggtech.bankingapp.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class TransactionController {
     TransactionService transService;
 
     @PostMapping("/transact")
-    public String Transact(@RequestBody Transaction transaction) {
+    public String Transact(@RequestBody Transaction transaction) throws Exception {
         String result = "";
         Transaction trans = transService.transact(transaction);
 
@@ -28,9 +29,9 @@ public class TransactionController {
             result = "Transaction Success";
         return result;
     }
-    @GetMapping ("/accountStatement/{accno}/{startDate}/{endDate}")
-    public List<Transaction> accountStatement(@PathVariable("accno") long accno, @PathVariable ("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, @PathVariable("endDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) throws ParseException {
-        return transService.accountStatement(startDate, endDate, accno);
+    @GetMapping ("/accountStatement/{accno}")
+    public List<Transaction> accountStatement(@PathVariable("accno") long accno, @RequestBody AccountStatement accountStatement) throws ParseException {
+        return transService.accountStatement(accountStatement.getStartDate(), accountStatement.getEndDate(), accno);
     }
 
     @GetMapping("/accountSummary/{accno}")

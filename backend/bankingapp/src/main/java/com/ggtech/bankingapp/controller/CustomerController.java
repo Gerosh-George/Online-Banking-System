@@ -48,7 +48,7 @@ public class CustomerController {
 				email=jsonNode.get("email").asText(),
 				aadhar=jsonNode.get("aadhar").asText(),
 				dob=jsonNode.get("dob").asText();
-		long mobile=jsonNode.get("name").asLong();
+		long mobile=jsonNode.get("mobile").asLong();
 
 		String address="",fathername="",mothername="";
 		if(jsonNode.has("address"))
@@ -80,6 +80,16 @@ public class CustomerController {
 	@GetMapping("/customer/{cid}")
 	public Customer getCustomer(@PathVariable("cid") long customerId) throws ResourceNotFoundException {
 		return custService.getCustomer(customerId);
+	}
+
+	@PutMapping("/changePassword/{otp}")
+	public String changePassword(@RequestBody LoginRequest u, @PathVariable("otp") String otp) {
+		return custService.resetPassword(u, otp);
+	}
+
+	@PutMapping("/changeDetails")
+	public String changeDetails(@RequestBody Customer u) {
+		return custService.updateCustomerDetails(u);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.ggtech.bankingapp.controller;
 
 import com.ggtech.bankingapp.model.Account;
+import com.ggtech.bankingapp.model.AddBalanceRequest;
 import com.ggtech.bankingapp.model.Admin;
 import com.ggtech.bankingapp.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,29 +16,37 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+
     @PostMapping("/save")
-    public String saveAdmin(@RequestBody Admin admin)
-    {
+    public String saveAdmin(@RequestBody Admin admin) {
         return adminService.saveAdmin(admin);
     }
 
     @PostMapping("/login")
-    public String adminLogin(@RequestBody Admin admin)
-    {
+    public String adminLogin(@RequestBody Admin admin) {
         return adminService.login(admin);
     }
 
     @PostMapping("/toggleAccountStatus/{accno}")
-    public String toggleDisable(@PathVariable("accno") long accno)
-    {
+    public String toggleDisable(@PathVariable("accno") long accno) {
         return adminService.toggleAccountStatus(accno);
     }
 
 
     @GetMapping("/accounts")
-    public List<Account> getAccounts()
-    {
+    public List<Account> getAccounts() {
         return adminService.getAccounts();
     }
+
+    @PostMapping("updateBalance")
+    public String updateBalance(@RequestBody AddBalanceRequest req) {
+        return adminService.updateCustomerBalance(req.getAccno(), req.getAmount());
+    }
+
+    @PostMapping("addFund")
+    public String addFund(@RequestBody AddBalanceRequest req) {
+        return adminService.addCustomerBalance(req.getAccno(),req.getAmount());
+    }
+
 
 }

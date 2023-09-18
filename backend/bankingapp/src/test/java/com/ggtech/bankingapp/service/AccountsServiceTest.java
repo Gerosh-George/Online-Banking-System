@@ -18,6 +18,7 @@ import com.ggtech.bankingapp.repository.AccountRepository;
 import com.ggtech.bankingapp.repository.CustomerRepository;
 import com.ggtech.bankingapp.repository.TransactionRepository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ class AccountsServiceTest {
      * Method under test: {@link AccountsService#createAccount(Account, Long)}
      */
     @Test
-    void testCreateAccount() {
+    void testCreateAccount() throws NoDataFoundException {
         Customer customer = new Customer();
         customer.setAadhar("Aadhar");
         customer.setAccount(new ArrayList<>());
@@ -169,7 +170,8 @@ class AccountsServiceTest {
         transaction.setAcc_no(acc_no);
         transaction.setAmount(10.0d);
         transaction.setStatus("SUCCESS");
-        transaction.setTimestamp("SUCCESS");
+        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
+        transaction.setTimestamp(timeStamp);
         transaction.setTransType("SUCCESS");
         transaction.setTransactionId(1L);
 

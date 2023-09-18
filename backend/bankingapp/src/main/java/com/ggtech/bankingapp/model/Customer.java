@@ -34,7 +34,6 @@ public class Customer {
 	@Column(nullable=false)
 	private long mobile;
 	
-	
 	@Column(nullable=false)
 	private String aadhar;
 	

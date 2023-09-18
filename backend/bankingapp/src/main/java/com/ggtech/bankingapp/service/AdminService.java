@@ -84,4 +84,28 @@ public class AdminService {
         return accRepo.findAll();
     }
 
+    public String updateCustomerBalance(long accno, double balance){
+        Account acc = accRepo.findById(accno).orElse(null);
+        if(acc==null){
+            return "Account doesn't exist";
+        }
+
+        acc.setBalance(balance);
+        accRepo.save(acc);
+        return "Balance updated successfully";
+
+    }
+
+    public String addCustomerBalance(long accno, double balance){
+        Account acc = accRepo.findById(accno).orElse(null);
+        if(acc==null){
+            return "Account doesn't exist";
+        }
+        double b = acc.getBalance();
+        acc.setBalance(b+balance);
+        accRepo.save(acc);
+        return "Fund added to the account balance successfully";
+
+    }
+
 }

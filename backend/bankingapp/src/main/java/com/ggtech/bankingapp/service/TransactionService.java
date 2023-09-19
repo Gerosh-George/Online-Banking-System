@@ -50,8 +50,6 @@ public class TransactionService {
             accRepo.save(acc);
         }
         trans.setAcc_no(acc);
-        //TODO:date type
-        //String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
         Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
         trans.setTimestamp(timeStamp);
         return transRepo.save(trans);

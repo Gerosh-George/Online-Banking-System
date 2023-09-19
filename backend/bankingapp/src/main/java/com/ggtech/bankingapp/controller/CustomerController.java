@@ -21,12 +21,6 @@ public class CustomerController {
 	@Autowired
 	CustomerService custService;
 
-	private ObjectMapper objectMapper;
-
-	public CustomerController() {
-		objectMapper=new ObjectMapper();
-	}
-
 	@PostMapping("/register")
 	@CrossOrigin
 	public String saveCustomer(@RequestBody @Valid Customer user){

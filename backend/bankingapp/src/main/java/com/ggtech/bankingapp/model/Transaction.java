@@ -26,7 +26,8 @@ public class Transaction {
 
 	@Column(nullable=false)
 	private double amount;
-	
+
+	@Column(nullable=false)
 	private long accFrom;
 
 	@Column(nullable=false)

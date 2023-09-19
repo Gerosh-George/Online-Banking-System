@@ -1,10 +1,12 @@
 package com.ggtech.bankingapp.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.ggtech.bankingapp.exceptions.ResourceNotFoundException;
+import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.LoginRequest;
+import com.ggtech.bankingapp.model.Transaction;
 import com.ggtech.bankingapp.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +70,11 @@ public class CustomerService {
 		Customer obj = custRepo.findById(cid).orElse(null);
 
 		if(obj==null){
-			throw new ResourceNotFoundException("Customer with this id does not exist");
+			Account accObj = accRepo.findById(cid).orElse(null);
+			if(accObj==null) {
+				throw new ResourceNotFoundException("Customer with this id does not exist");
+			}
+			obj = accObj.getCustomer();
 		}
 
 		return obj;
@@ -105,6 +111,26 @@ public class CustomerService {
 			result = "Success!";
 		}
 		return result;
+	}
+
+	public List<Transaction> getAllUserTransactions(long cid) throws ResourceNotFoundException {
+		Customer obj = custRepo.findById(cid).orElse(null);
+		if(obj==null){
+			throw new ResourceNotFoundException("User with this id does not exist");
+		}
+
+		List<Account> accountList = obj.getAccount();
+		List<Transaction> transactionList = new ArrayList<>();
+		for(Account acc : accountList){
+			transactionList.addAll(acc.getTransaction());
+		}
+
+        Set<Transaction> set = new LinkedHashSet<>(transactionList);
+		transactionList.clear();
+		transactionList.addAll(set);
+
+		return transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(5).collect(Collectors.toList());
+
 	}
 
 }

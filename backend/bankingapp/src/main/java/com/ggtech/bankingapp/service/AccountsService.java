@@ -31,9 +31,11 @@ public class AccountsService {
         long generatedNumber = 0;
         Random rand = new Random();
         generatedNumber = Math.abs(999999 + rand.nextLong());
+        generatedNumber = generatedNumber % 100000000000L;
         while(accountsRepo.findById(generatedNumber).isPresent())
         {
-            generatedNumber = Math.abs(9999999 + rand.nextLong());
+            generatedNumber = Math.abs(999999 + rand.nextLong());
+            generatedNumber = generatedNumber % 100000000000L;
         }
         Customer u = customerRepository.findById(userid).orElse(null);
         if(u==null){

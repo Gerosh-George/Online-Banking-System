@@ -4,8 +4,6 @@ package com.ggtech.bankingapp.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 public class LoginRequest {
     public Long getCustomerId() {
         return customerId;

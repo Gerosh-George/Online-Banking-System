@@ -12,6 +12,8 @@ import com.ggtech.bankingapp.service.AccountsService;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "*")
 public class AccountController {
@@ -22,8 +24,7 @@ public class AccountController {
 
 
     @PostMapping("/account/{uid}")
-    public String createAccount(@RequestBody Account account, @PathVariable("uid") Long userid)
-    {
+    public String createAccount(@Valid @RequestBody Account account, @PathVariable("uid") Long userid) throws NoDataFoundException {
         String result = "";
         Account acc = accountsService.createAccount(account, userid);
 
@@ -34,17 +35,11 @@ public class AccountController {
         return result;
     }
 
-    @GetMapping("/account/{uid}")
-    public String getAccount(@RequestBody Account account, @PathVariable("uid") Long userid)
+   @GetMapping("/account/{uid}")
+    public List<Account> getAccount(@PathVariable("uid") Long userid)
     {
-        String result = "";
-        Account acc = accountsService.createAccount(account, userid);
+        return  accountsService.getUserAccounts(userid);
 
-        if(acc != null)
-            result = "Account created!";
-        else
-            result = "Account creation failed!";
-        return result;
     }
 
 

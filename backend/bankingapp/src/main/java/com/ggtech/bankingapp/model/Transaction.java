@@ -2,32 +2,43 @@ package com.ggtech.bankingapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import javax.persistence.Column;
 import  javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import java.time.LocalDateTime;
+import java.util.Date;
+import javax.validation.constraints.NotEmpty;
 
 
 @Entity
 public class Transaction {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
+
+	@Column(nullable=false)
 	private String transType;
+
+	@Column(nullable=false)
 	private double amount;
-	
+
+	@Column(nullable=false)
 	private long accFrom;
+
+	@Column(nullable=false)
 	private long accTo;
-	private String timestamp;
+	
+	private Date timestamp;
 	private String status;
 	
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name="accno")
-	@JsonBackReference
+	@JoinColumn(name="acc_no")
 	private Account acc_no;
 
 	public long getTransactionId() {
@@ -70,11 +81,11 @@ public class Transaction {
 		this.accTo = accTo;
 	}
 
-	public String getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 

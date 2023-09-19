@@ -9,35 +9,32 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table
 public class Account {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Account_no")
 	private long accountNo;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String accountType;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private double balance;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String branch;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String ifsc;
 
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private boolean isdisabled;
 
-	@Column()
 	private LocalDateTime openeingDate;
 
 	@ManyToOne
 	@JsonBackReference
-	@JoinColumn(name="customerId")
+	@JoinColumn(name="customer")
 	private Customer customer;
 
 

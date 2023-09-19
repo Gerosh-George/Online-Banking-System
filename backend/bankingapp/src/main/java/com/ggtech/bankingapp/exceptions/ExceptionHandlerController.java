@@ -23,7 +23,6 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
 
@@ -54,4 +53,10 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     public @ResponseBody ExceptionResponse handleNoDataFoundException(NoDataFoundException ex) {
         return new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(value=Exception.class)
+    public @ResponseBody ExceptionResponse handleCommonException(Exception ex) {
+        return new ExceptionResponse(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage());
+    }
+
 }

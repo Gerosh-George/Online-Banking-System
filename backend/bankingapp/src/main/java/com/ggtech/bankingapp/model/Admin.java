@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 public class Admin {
     @Id
@@ -12,6 +14,7 @@ public class Admin {
     private String userid;
 
     @Column(nullable=false)
+    @Length(min=8, max=20, message="Password must be between 8 to 20 characters")
     private String password;
 
     public String getUserid() {

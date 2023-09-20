@@ -4,10 +4,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 public class AccountStatement {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(nullable=false)
     private Date startDate;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(nullable =false)
     private Date endDate;
 
     public Date getStartDate() {

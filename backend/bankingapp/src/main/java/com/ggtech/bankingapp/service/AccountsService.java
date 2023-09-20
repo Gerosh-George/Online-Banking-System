@@ -80,4 +80,17 @@ public class AccountsService {
         return cust.getAccount();
     }
 
+    public Double getAllAccountBalance(long cid) throws ResourceNotFoundException {
+        Customer cust = customerRepository.findById(cid).orElse(null);
+        if(cust==null){
+            throw new ResourceNotFoundException("Customer with this id does not exist!");
+        }
+        List<Account> accountList = cust.getAccount();
+        double total=0;
+        for(Account acc: accountList){
+            total+=acc.getBalance();
+        }
+        return total;
+    }
+
 }

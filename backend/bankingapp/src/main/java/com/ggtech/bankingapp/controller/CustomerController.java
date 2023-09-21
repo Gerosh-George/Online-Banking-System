@@ -2,6 +2,7 @@ package com.ggtech.bankingapp.controller;
 
 import com.ggtech.bankingapp.exceptions.ResourceNotFoundException;
 import com.ggtech.bankingapp.model.LoginRequest;
+import com.ggtech.bankingapp.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import com.ggtech.bankingapp.model.Customer;
 import com.ggtech.bankingapp.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -47,4 +49,8 @@ public class CustomerController {
 		return custService.updateCustomerDetails(u);
 	}
 
+	@GetMapping("/allTransactions/{cid}")
+	public List<Transaction> getAllTransactions(@PathVariable("cid") long customerId) throws ResourceNotFoundException {
+		return custService.getAllUserTransactions(customerId);
+	}
 }

@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.controller;
 
+import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
 import com.ggtech.bankingapp.model.AccountStatement;
 import com.ggtech.bankingapp.model.Transaction;
 import com.ggtech.bankingapp.service.TransactionService;
@@ -24,6 +25,7 @@ public class TransactionController {
         Transaction trans = transService.transact(transaction);
 
         if (trans == null || Objects.equals(trans.getStatus(), "FAIL"))
+            //throw new BalanceInsufficientException("Transaction failed");
             result = "Transaction Failed";
         else
             result = "Transaction Success";

@@ -31,9 +31,11 @@ public class AccountsService {
         long generatedNumber = 0;
         Random rand = new Random();
         generatedNumber = Math.abs(999999 + rand.nextLong());
+        generatedNumber = generatedNumber % 100000000000L;
         while(accountsRepo.findById(generatedNumber).isPresent())
         {
-            generatedNumber = Math.abs(9999999 + rand.nextLong());
+            generatedNumber = Math.abs(999999 + rand.nextLong());
+            generatedNumber = generatedNumber % 100000000000L;
         }
         Customer u = customerRepository.findById(userid).orElse(null);
         if(u==null){
@@ -76,6 +78,19 @@ public class AccountsService {
         Customer cust = customerRepository.findById(uid).orElse(null);
         assert cust != null;
         return cust.getAccount();
+    }
+
+    public Double getAllAccountBalance(long cid) throws ResourceNotFoundException {
+        Customer cust = customerRepository.findById(cid).orElse(null);
+        if(cust==null){
+            throw new ResourceNotFoundException("Customer with this id does not exist!");
+        }
+        List<Account> accountList = cust.getAccount();
+        double total=0;
+        for(Account acc: accountList){
+            total+=acc.getBalance();
+        }
+        return total;
     }
 
 }

@@ -60,4 +60,9 @@ public class AccountController {
     {
         return accountsService.checkBalance(accno);
     }
+
+    @GetMapping("/allAccountBalance/{cid}")
+    public double getAllAccountBalance(@PathVariable("cid") long cid) throws ResourceNotFoundException{
+        return accountsService.getAllAccountBalance(cid);
+    }
 }

@@ -60,11 +60,11 @@ public class TransactionService {
        List<Transaction> transactionList= transRepo.findByAccountNumber(accno);
 
        List<Transaction> statement =new ArrayList<>();
-       for(Transaction transaction: transactionList)
-       {
-           if(transaction.getTimestamp()==startDate || transaction.getTimestamp()==endDate || (transaction.getTimestamp().after(startDate) && transaction.getTimestamp().before(endDate)) )
-           {
-               statement.add(transaction);
+       if(endDate.after(startDate)) {
+           for (Transaction transaction : transactionList) {
+               if (transaction.getTimestamp() == startDate || transaction.getTimestamp() == endDate || (transaction.getTimestamp().after(startDate) && transaction.getTimestamp().before(endDate))) {
+                   statement.add(transaction);
+               }
            }
        }
        return statement;

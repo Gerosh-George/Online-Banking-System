@@ -55,8 +55,9 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody ExceptionResponse handleCommonException(Exception ex) {
-        return new ExceptionResponse(HttpStatus.SERVICE_UNAVAILABLE.value(), ex.getMessage());
+        return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
     }
 
 }

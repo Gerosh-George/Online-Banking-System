@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.service;
 
+import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.Admin;
 import com.ggtech.bankingapp.repository.AccountRepository;
@@ -84,24 +85,29 @@ public class AdminService {
         return accRepo.findAll();
     }
 
-    public String updateCustomerBalance(long accno, double balance){
+    public String updateCustomerBalance(long accno, double balance) throws BalanceInsufficientException {
         Account acc = accRepo.findById(accno).orElse(null);
         if(acc==null){
             return "Account doesn't exist";
         }
-
+        if(balance<=0){
+            throw new BalanceInsufficientException("Amount can't be <= 0");
+        }
         acc.setBalance(balance);
         accRepo.save(acc);
         return "Balance updated successfully";
 
     }
 
-    public String addCustomerBalance(long accno, double balance){
+    public String addCustomerBalance(long accno, double balance) throws BalanceInsufficientException {
         Account acc = accRepo.findById(accno).orElse(null);
         if(acc==null){
             return "Account doesn't exist";
         }
         double b = acc.getBalance();
+        if(balance<=0){
+            throw new BalanceInsufficientException("Amount can't be <= 0");
+        }
         acc.setBalance(b+balance);
         accRepo.save(acc);
         return "Fund added to the account balance successfully";

@@ -51,7 +51,11 @@ public class TransactionService {
 		        
 		        double balance = acc.getBalance();
 		        double amt = trans.getAmount();
-		        
+
+				if(amt<=0){
+					throw new BalanceInsufficientException("Amount can't be <= 0");
+				}
+
 		        if(amt>balance) {
 		        	throw new BalanceInsufficientException("Amount is not sufficient");
 		        }

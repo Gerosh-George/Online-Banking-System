@@ -8,6 +8,7 @@ import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.LoginRequest;
 import com.ggtech.bankingapp.model.Transaction;
 import com.ggtech.bankingapp.repository.AccountRepository;
+import com.ggtech.bankingapp.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class CustomerService {
 
 	@Autowired
 	AccountRepository accRepo;
+
+	@Autowired
+	TransactionRepository tranRepo;
 
 	public String saveCustomer(Customer cust) {
 		String result = "";
@@ -122,14 +126,14 @@ public class CustomerService {
 		List<Account> accountList = obj.getAccount();
 		List<Transaction> transactionList = new ArrayList<>();
 		for(Account acc : accountList){
-			transactionList.addAll(acc.getTransaction());
+			transactionList.addAll(tranRepo.findByAccountNumber(acc.getAccountNo()));
 		}
 
         Set<Transaction> set = new LinkedHashSet<>(transactionList);
 		transactionList.clear();
 		transactionList.addAll(set);
 
-		return transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(5).collect(Collectors.toList());
+		return transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(10).collect(Collectors.toList());
 
 	}
 

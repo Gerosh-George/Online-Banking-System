@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.controller;
 
+import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.AddBalanceRequest;
 import com.ggtech.bankingapp.model.Admin;
@@ -41,12 +42,12 @@ public class AdminController {
     }
 
     @PostMapping("updateBalance")
-    public String updateBalance(@Valid @RequestBody AddBalanceRequest req) {
+    public String updateBalance(@Valid @RequestBody AddBalanceRequest req) throws BalanceInsufficientException {
         return adminService.updateCustomerBalance(req.getAccno(), req.getAmount());
     }
 
     @PostMapping("addFund")
-    public String addFund(@Valid @RequestBody AddBalanceRequest req) {
+    public String addFund(@Valid @RequestBody AddBalanceRequest req) throws BalanceInsufficientException {
         return adminService.addCustomerBalance(req.getAccno(),req.getAmount());
     }
 

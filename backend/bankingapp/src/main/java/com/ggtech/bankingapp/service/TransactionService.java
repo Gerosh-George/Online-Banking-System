@@ -76,13 +76,12 @@ public class TransactionService {
 		        trans.setStatus("SUCCESS");
 		        return transRepo.save(trans);
         }catch(BalanceInsufficientException ex) {
-        	throw new BalanceInsufficientException(ex.getMessage());
-        }finally {
         	trans.setAcc_no(acc);
 	        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
 	        trans.setTimestamp(timeStamp);
 	        trans.setStatus("FAIL");
 	        transRepo.save(trans);
+        	throw new BalanceInsufficientException(ex.getMessage());
         }
     }
 

@@ -24,10 +24,9 @@ public class TransactionController {
         String result = "";
         Transaction trans = transService.transact(transaction);
 
-        if (trans == null || Objects.equals(trans.getStatus(), "FAIL"))
-            //throw new BalanceInsufficientException("Transaction failed");
-            result = "Transaction Failed";
-        else
+        if (trans == null ) {
+        	throw new Exception("Some error occured in the transaction");
+        }
             result = "Transaction Success";
         return result;
     }

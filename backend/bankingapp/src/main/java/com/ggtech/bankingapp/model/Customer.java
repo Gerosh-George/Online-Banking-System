@@ -184,7 +184,7 @@ public class Customer {
 
 
 
-	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private List<Account> account;
 	
 	

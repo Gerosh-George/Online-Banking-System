@@ -74,9 +74,12 @@ public class AccountsService {
         return accountsRepo.findById(accno).get().getBalance();
     }
 
-    public List<Account> getUserAccounts(long uid){
+    public List<Account> getUserAccounts(long uid) throws ResourceNotFoundException{
         Customer cust = customerRepository.findById(uid).orElse(null);
         assert cust != null;
+        if(cust.getAccount().isEmpty()) {
+        	throw new ResourceNotFoundException("CUSTOMER DOES NOT HAVE ANY ACCOUNTS");
+        }
         return cust.getAccount();
     }
 

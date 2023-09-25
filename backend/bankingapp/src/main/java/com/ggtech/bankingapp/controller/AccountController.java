@@ -36,7 +36,7 @@ public class AccountController {
     }
 
    @GetMapping("/account/{uid}")
-    public List<Account> getAccount(@PathVariable("uid") Long userid)
+    public List<Account> getAccount(@PathVariable("uid") Long userid) throws ResourceNotFoundException
     {
         return  accountsService.getUserAccounts(userid);
 

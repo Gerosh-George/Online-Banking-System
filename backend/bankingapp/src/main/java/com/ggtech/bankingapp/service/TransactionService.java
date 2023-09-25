@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.service;
 
+import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.Transaction;
 import com.ggtech.bankingapp.repository.AccountRepository;
@@ -26,33 +27,63 @@ public class TransactionService {
 
     public Transaction transact(Transaction trans) throws Exception {
         if(trans.getAccFrom()==trans.getAccTo()){
-            throw new Exception("Transferring funds to same account number not allowed");
+            throw new BalanceInsufficientException("Transferring funds to same account number not allowed");
         }
         long accnumber = trans.getAccFrom();
         long toAccNum = trans.getAccTo();
-        Account acc = accRepo.findById(accnumber).get();
-        double balance = acc.getBalance();
-        double amt = trans.getAmount();
-        if(amt > balance || accRepo.findById(toAccNum).isEmpty() || acc.isDisabled() || accRepo.findById(toAccNum).get().isDisabled())
-            trans.setStatus("FAIL");
-        else {
-            Account acc2 = accRepo.findById(toAccNum).get();
-            trans.setStatus("SUCCESS");
-            balance -= amt;
-            if(accnumber != toAccNum)
-            {
-                double balance2 = acc2.getBalance();
-                balance2 += amt;
-                acc2.setBalance(balance2);
-                accRepo.save(acc2);
-            }
-            acc.setBalance(balance);
-            accRepo.save(acc);
+        Account acc = accRepo.findById(accnumber).orElse(null);
+        try {
+		        if(acc==null) {
+		        	throw new BalanceInsufficientException(accnumber + " account doesn't exits");
+		        }    
+		
+		        if(accRepo.findById(toAccNum).isEmpty()){
+		        	throw new BalanceInsufficientException(toAccNum + " account doesn't exits");
+		        }
+		        
+		        if(acc.isDisabled()) {
+		        	throw new BalanceInsufficientException(accnumber + " account is disabled");
+		        }
+		        
+		        if(accRepo.findById(toAccNum).get().isDisabled()) {
+		        	throw new BalanceInsufficientException(toAccNum + " account is disabled");
+		        }
+		        
+		        double balance = acc.getBalance();
+		        double amt = trans.getAmount();
+		        
+		        if(amt>balance) {
+		        	throw new BalanceInsufficientException("Amount is not sufficient");
+		        }
+		        
+		        else {
+		            Account acc2 = accRepo.findById(toAccNum).get();
+		          
+		            balance -= amt;
+		            if(accnumber != toAccNum)
+		            {
+		                double balance2 = acc2.getBalance();
+		                balance2 += amt;
+		                acc2.setBalance(balance2);
+		                accRepo.save(acc2);
+		            }
+		            acc.setBalance(balance);
+		            accRepo.save(acc);
+		        }
+		        trans.setAcc_no(acc);
+		        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
+		        trans.setTimestamp(timeStamp);
+		        trans.setStatus("SUCCESS");
+		        return transRepo.save(trans);
+        }catch(BalanceInsufficientException ex) {
+        	throw new BalanceInsufficientException(ex.getMessage());
+        }finally {
+        	trans.setAcc_no(acc);
+	        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
+	        trans.setTimestamp(timeStamp);
+	        trans.setStatus("FAIL");
+	        transRepo.save(trans);
         }
-        trans.setAcc_no(acc);
-        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
-        trans.setTimestamp(timeStamp);
-        return transRepo.save(trans);
     }
 
 

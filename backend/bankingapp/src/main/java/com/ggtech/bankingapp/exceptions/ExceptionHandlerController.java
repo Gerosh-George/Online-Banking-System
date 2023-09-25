@@ -53,6 +53,13 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     public @ResponseBody ExceptionResponse handleNoDataFoundException(NoDataFoundException ex) {
         return new ExceptionResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+    
+    @ExceptionHandler(value=BalanceInsufficientException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ExceptionResponse handleBalanceInsufficientException(BalanceInsufficientException ex) {
+        return new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
+    
 
     @ExceptionHandler(value=Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

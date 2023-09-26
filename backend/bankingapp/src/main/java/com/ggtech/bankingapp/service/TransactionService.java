@@ -26,7 +26,7 @@ public class TransactionService {
     AccountRepository accRepo;
 
     public Transaction transact(Transaction trans) throws Exception {
-        if(trans.getAccFrom()==trans.getAccTo()){
+        if(!trans.getTransType().equalsIgnoreCase("Withdraw") && trans.getAccFrom()==trans.getAccTo()){
             throw new BalanceInsufficientException("Transferring funds to same account number not allowed");
         }
         long accnumber = trans.getAccFrom();
@@ -61,25 +61,32 @@ public class TransactionService {
 		        }
 		        
 		        else {
-		            Account acc2 = accRepo.findById(toAccNum).get();
-		          
-		            balance -= amt;
-		            if(accnumber != toAccNum)
-		            {
-		                double balance2 = acc2.getBalance();
-		                balance2 += amt;
-		                acc2.setBalance(balance2);
-		                accRepo.save(acc2);
-		            }
-		            acc.setBalance(balance);
-		            accRepo.save(acc);
-		        }
+					balance -= amt;
+					if(trans.getTransType().equalsIgnoreCase("Withdraw")){
+						trans.setAccTo(0L);
+                    } else {
+						Account acc2 = accRepo.findById(toAccNum).get();
+						if (accnumber != toAccNum) {
+							double balance2 = acc2.getBalance();
+							balance2 += amt;
+							acc2.setBalance(balance2);
+							accRepo.save(acc2);
+						}
+                    }
+                    acc.setBalance(balance);
+                    accRepo.save(acc);
+                }
 		        trans.setAcc_no(acc);
 		        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
 		        trans.setTimestamp(timeStamp);
 		        trans.setStatus("SUCCESS");
 		        return transRepo.save(trans);
         }catch(BalanceInsufficientException ex) {
+
+			if(trans.getTransType().equalsIgnoreCase("Withdraw")){
+				trans.setAccTo(0L);
+			}
+
         	trans.setAcc_no(acc);
 	        Timestamp timeStamp=new Timestamp(System.currentTimeMillis());
 	        trans.setTimestamp(timeStamp);
@@ -108,6 +115,11 @@ public class TransactionService {
     {
         List<Transaction> transactionList= transRepo.findByAccountNumber(accno);
         return transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(5).collect(Collectors.toList());
+    }
+
+    //TODO
+    public String withdrawal(){
+        return null;
     }
 
 }

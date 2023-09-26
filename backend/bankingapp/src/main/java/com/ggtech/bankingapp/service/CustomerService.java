@@ -3,6 +3,7 @@ package com.ggtech.bankingapp.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.ggtech.bankingapp.exceptions.NoDataFoundException;
 import com.ggtech.bankingapp.exceptions.ResourceNotFoundException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.LoginRequest;
@@ -49,7 +50,7 @@ public class CustomerService {
 		return result;
 	}
 
-	public String validateCustomer(LoginRequest u) {
+	public String validateCustomer(LoginRequest u) throws NoDataFoundException {
 		Customer cust = null;
 		String result = "";
 
@@ -59,12 +60,12 @@ public class CustomerService {
 			cust = obj.get();
 		}
 		if (cust == null) {
-			result = "Invalid Customer";
+			throw new NoDataFoundException("customer with this id doesn't exists!");
 		} else {
 			if (u.getPassword().equals(cust.getPassword())) {
 				result = "Login success";
 			} else {
-				result = "Login failed";
+				result = "Login failed, please check the password";
 			}
 		}
 		return result;
@@ -84,13 +85,13 @@ public class CustomerService {
 		return obj;
 	}
 
-	public String resetPassword(LoginRequest u, String otp) {
+	public String resetPassword(LoginRequest u, String otp) throws ResourceNotFoundException {
 		String result = "";
 
 		Customer cust = custRepo.findById(u.getCustomerId()).orElse(null);
 
 		if (cust == null)
-			result = "Invalid customer";
+			throw new ResourceNotFoundException("Customer with this id does not exist");
 		else {
 			if (otp.equals("101010")) {
 				cust.setPassword(u.getPassword());

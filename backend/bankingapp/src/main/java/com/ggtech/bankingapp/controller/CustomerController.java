@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.controller;
 
+import com.ggtech.bankingapp.exceptions.NoDataFoundException;
 import com.ggtech.bankingapp.exceptions.ResourceNotFoundException;
 import com.ggtech.bankingapp.model.LoginRequest;
 import com.ggtech.bankingapp.model.Transaction;
@@ -30,7 +31,7 @@ public class CustomerController {
 	}
 
 	@PostMapping("/login")
-	public String validateCustomer(@RequestBody LoginRequest u) {
+	public String validateCustomer(@RequestBody LoginRequest u) throws NoDataFoundException {
 		return custService.validateCustomer(u);
 	}
 
@@ -40,7 +41,7 @@ public class CustomerController {
 	}
 
 	@PutMapping("/changePassword/{otp}")
-	public String changePassword(@RequestBody LoginRequest u, @PathVariable("otp") String otp) {
+	public String changePassword(@RequestBody LoginRequest u, @PathVariable("otp") String otp) throws ResourceNotFoundException {
 		return custService.resetPassword(u, otp);
 	}
 

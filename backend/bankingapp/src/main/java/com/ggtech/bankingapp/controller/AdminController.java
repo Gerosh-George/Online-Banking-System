@@ -1,6 +1,7 @@
 package com.ggtech.bankingapp.controller;
 
 import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
+import com.ggtech.bankingapp.exceptions.NoDataFoundException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.AddBalanceRequest;
 import com.ggtech.bankingapp.model.Admin;
@@ -26,7 +27,7 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String adminLogin(@Valid @RequestBody Admin admin) {
+    public String adminLogin(@Valid @RequestBody Admin admin) throws NoDataFoundException {
         return adminService.login(admin);
     }
 

@@ -1,6 +1,7 @@
 package com.ggtech.bankingapp.service;
 
 import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
+import com.ggtech.bankingapp.exceptions.NoDataFoundException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.Admin;
 import com.ggtech.bankingapp.repository.AccountRepository;
@@ -39,8 +40,7 @@ public class AdminService {
         return "Admin already exists!";
     }
 
-    public String login(Admin u)
-    {
+    public String login(Admin u) throws NoDataFoundException {
         Admin admin = null;
         String result = "";
 
@@ -52,12 +52,12 @@ public class AdminService {
         }
         if(admin == null)
         {
-            return "Invalid Admin details";
+            throw new NoDataFoundException("admin with this ID does not exist");
         }
         else
         {
             if(!u.getPassword().equals(admin.getPassword()))
-                return "Login failed";
+                return "Login failed, please check the password";
         }
         return "Login success";
     }

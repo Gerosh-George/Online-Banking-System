@@ -40,14 +40,16 @@ public class CustomerService {
 
 	public String saveCustomer(Customer cust) {
 		String result = "";
+		long id = 0;
 		Customer o = custRepo.findByAadhar(cust.getAadhar());
 		if (o!=null) {
 			result = "Customer already exists!";
 		} else {
 			result = "Customer created successfully!";
 			Customer obj = custRepo.save(cust);
+			id = obj.getCustomerId();
 		}
-		return result;
+		return "{\"message\":\""+result+"\",\"id\":\""+id+"\"}";
 	}
 
 	public String validateCustomer(LoginRequest u) throws NoDataFoundException {

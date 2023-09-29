@@ -10,4 +10,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	//Implement method to get ALl Users
 
     public Customer findByAadhar(String aadhar);
+
+    public Customer findByCustomerId(long customerId);
 }

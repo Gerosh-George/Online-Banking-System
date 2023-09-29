@@ -107,5 +107,4 @@ public class AdminService {
         return "Fund added to the account balance successfully";
 
     }
-
 }

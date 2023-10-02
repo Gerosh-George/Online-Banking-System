@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.repository.AccountRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -43,10 +44,13 @@ public class AccountsService {
         }
         String branch = account.getBranch();
         String ifsc = branch.substring(0, 3) + (int)(branch.charAt(branch.length()-1)) + (int)(branch.charAt(branch.length()-2));
+        LocalDateTime localDateTime = LocalDateTime.now();
+        account.setOpeneingDate(localDateTime);
         account.setCustomer(u);
         account.setAccountNo(generatedNumber);
         account.setIfsc(ifsc);
         account.setDisabled(true);
+
         return accountsRepo.save(account);
     }
 

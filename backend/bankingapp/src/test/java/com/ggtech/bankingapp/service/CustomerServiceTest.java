@@ -1,5 +1,6 @@
 package com.ggtech.bankingapp.service;
 
+import com.ggtech.bankingapp.exceptions.NoDataFoundException;
 import com.ggtech.bankingapp.exceptions.ResourceNotFoundException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.Customer;
@@ -99,7 +100,7 @@ class CustomerServiceTest {
      * Method under test: {@link CustomerService#validateCustomer(LoginRequest)}
      */
     @Test
-    void testValidateCustomer() {
+    void testValidateCustomer() throws NoDataFoundException {
         Customer customer = new Customer();
         customer.setAadhar("Aadhar");
         customer.setAccount(new ArrayList<>());
@@ -126,7 +127,7 @@ class CustomerServiceTest {
      * Method under test: {@link CustomerService#validateCustomer(LoginRequest)}
      */
     @Test
-    void testValidateCustomer2() {
+    void testValidateCustomer2() throws NoDataFoundException {
         Customer customer = mock(Customer.class);
         when(customer.getPassword()).thenReturn("foo");
         doNothing().when(customer).setAadhar(Mockito.<String>any());
@@ -177,7 +178,7 @@ class CustomerServiceTest {
      * Method under test: {@link CustomerService#validateCustomer(LoginRequest)}
      */
     @Test
-    void testValidateCustomer3() {
+    void testValidateCustomer3() throws NoDataFoundException {
         Optional<Customer> emptyResult = Optional.empty();
         when(customerRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
 
@@ -278,7 +279,7 @@ class CustomerServiceTest {
      * Method under test: {@link CustomerService#resetPassword(LoginRequest, String)}
      */
     @Test
-    void testResetPassword() {
+    void testResetPassword() throws ResourceNotFoundException {
         Customer customer = new Customer();
         customer.setAadhar("Aadhar");
         customer.setAccount(new ArrayList<>());
@@ -304,7 +305,7 @@ class CustomerServiceTest {
      * Method under test: {@link CustomerService#resetPassword(LoginRequest, String)}
      */
     @Test
-    void testResetPassword3() {
+    void testResetPassword3() throws ResourceNotFoundException {
         Optional<Customer> emptyResult = Optional.empty();
         when(customerRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
 
@@ -319,7 +320,7 @@ class CustomerServiceTest {
      * Method under test: {@link CustomerService#resetPassword(LoginRequest, String)}
      */
     @Test
-    void testResetPassword4() {
+    void testResetPassword4() throws ResourceNotFoundException {
         Customer customer = new Customer();
         customer.setAadhar("Aadhar");
         customer.setAccount(new ArrayList<>());

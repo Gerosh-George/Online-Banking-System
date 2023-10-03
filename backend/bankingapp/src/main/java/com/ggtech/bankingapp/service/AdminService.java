@@ -1,5 +1,7 @@
 package com.ggtech.bankingapp.service;
 
+import com.ggtech.bankingapp.exceptions.BalanceInsufficientException;
+import com.ggtech.bankingapp.exceptions.NoDataFoundException;
 import com.ggtech.bankingapp.model.Account;
 import com.ggtech.bankingapp.model.Admin;
 import com.ggtech.bankingapp.repository.AccountRepository;
@@ -38,8 +40,7 @@ public class AdminService {
         return "Admin already exists!";
     }
 
-    public String login(Admin u)
-    {
+    public String login(Admin u) throws NoDataFoundException {
         Admin admin = null;
         String result = "";
 
@@ -51,12 +52,12 @@ public class AdminService {
         }
         if(admin == null)
         {
-            return "Invalid Admin details";
+            throw new NoDataFoundException("admin with this ID does not exist");
         }
         else
         {
             if(!u.getPassword().equals(admin.getPassword()))
-                return "Login failed";
+                return "Login failed, please check the password";
         }
         return "Login success";
     }
@@ -84,24 +85,29 @@ public class AdminService {
         return accRepo.findAll();
     }
 
-    public String updateCustomerBalance(long accno, double balance){
+    public String updateCustomerBalance(long accno, double balance) throws BalanceInsufficientException {
         Account acc = accRepo.findById(accno).orElse(null);
         if(acc==null){
             return "Account doesn't exist";
         }
-
+        if(balance<=0){
+            throw new BalanceInsufficientException("Amount can't be <= 0");
+        }
         acc.setBalance(balance);
         accRepo.save(acc);
         return "Balance updated successfully";
 
     }
 
-    public String addCustomerBalance(long accno, double balance){
+    public String addCustomerBalance(long accno, double balance) throws BalanceInsufficientException {
         Account acc = accRepo.findById(accno).orElse(null);
         if(acc==null){
             return "Account doesn't exist";
         }
         double b = acc.getBalance();
+        if(balance<=0){
+            throw new BalanceInsufficientException("Amount can't be <= 0");
+        }
         acc.setBalance(b+balance);
         accRepo.save(acc);
         return "Fund added to the account balance successfully";

@@ -30,7 +30,7 @@ public class TransactionController {
             result = "Transaction Success";
         return result;
     }
-    @GetMapping ("/accountStatement/{accno}")
+    @PostMapping ("/accountStatement/{accno}")
     public List<Transaction> accountStatement(@PathVariable("accno") long accno, @RequestBody AccountStatement accountStatement) throws ParseException {
         return transService.accountStatement(accountStatement.getStartDate(), accountStatement.getEndDate(), accno);
     }

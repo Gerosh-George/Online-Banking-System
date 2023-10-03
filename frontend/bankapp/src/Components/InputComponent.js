@@ -5,6 +5,7 @@ export default function InputComponent({
   _id,
   _changeHandler,
   _placeholder,
+  _type
 }) {
   return (
     <div>
@@ -16,6 +17,7 @@ export default function InputComponent({
         required
         onChange={_changeHandler}
         style={{ margin: "5px" }}
+        type={_type ? _type : "text"}
       />
     </div>
   );

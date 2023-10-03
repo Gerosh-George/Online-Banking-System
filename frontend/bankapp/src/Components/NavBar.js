@@ -5,21 +5,27 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
+  const navigate = useNavigate();
   return (
     <>
       <Box sx={{ m: 2, flexGrow: 1 }}>
-        <AppBar position="static" >
+        <AppBar position="static">
           <Toolbar>
-            
-
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Wells Fargo
             </Typography>
-            <Button color="inherit"><Link to="/Login">Login</Link></Button>
-            <Button color="inherit"><Link to="/Registration">Register</Link></Button>
+            <Button color="inherit" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/registration")}>
+              Register
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/admin")}>
+              Admin
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>

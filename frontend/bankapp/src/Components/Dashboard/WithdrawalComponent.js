@@ -1,68 +1,160 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { Modal, Button, Form, Tab, Tabs } from "react-bootstrap";
+import styled from "styled-components";
+import { withdrawRequest } from "../../utils/GetRequests";
 
-// Define the styled components for the page
-const WithdrawalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-`;
-
-const WithdrawalForm = styled.form`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+const StyledModalContent = styled.div`
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
 `;
 
-const FormGroup = styled.div`
-  margin-bottom: 20px;
-`;
+const centerButtonStyle = {
+  display: "flex",
+  justifyContent: "center",
+  marginTop: "20px",
+};
 
-const Label = styled.label`
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-`;
+const WithdrawalComponent = ({
+  show,
+  onHide,
+  accounts,
+  globalRefresh,
+  setGlobalRefresh,
+}) => {
+  const [withdrawalAmount, setWithdrawalAmount] = useState("");
+  const [selfTransferAmount, setSelfTransferAmount] = useState("");
+  const [sourceAccount, setSourceAccount] = useState(""); // Manage source account
+  const [targetAccount, setTargetAccount] = useState(""); // Manage target account
+  const [activeTab, setActiveTab] = useState("withdrawal"); // Manage active tab
 
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+  const handleWithdraw = () => {
+    withdrawRequest(
+      {
+        transType: "WITHDRAW",
+        amount: withdrawalAmount,
+        accFrom: sourceAccount,
+        accTo: sourceAccount,
+      },
+      globalRefresh,
+      setGlobalRefresh
+    );
+    onHide();
+  };
 
-const Button = styled.button`
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-`;
+  const handleSelfTransfer = () => {
+    withdrawRequest(
+      {
+        transType: "SELF",
+        amount: withdrawalAmount,
+        accFrom: sourceAccount,
+        accTo: targetAccount,
+      },
+      globalRefresh,
+      setGlobalRefresh
+    );
+    onHide();
+  };
 
-const WithdrawalComponent = () => {
   return (
-    <WithdrawalContainer>
-      <WithdrawalForm>
-        <h2>Withdraw Funds</h2>
-        <FormGroup>
-          <Label>Amount:</Label>
-          <Input type="number" placeholder="Enter the amount to withdraw" />
-        </FormGroup>
-        <FormGroup>
-          <Label>Bank Account:</Label>
-          <Input type="text" placeholder="Enter your bank account number" />
-        </FormGroup>
-        <Button type="submit">Withdraw</Button>
-      </WithdrawalForm>
-    </WithdrawalContainer>
+    <Modal show={show} onHide={onHide} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Transfer Money</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <StyledModalContent>
+          <Tabs
+            activeKey={activeTab}
+            onSelect={(key) => setActiveTab(key)} // Update active tab state
+          >
+            <Tab eventKey="withdrawal" title="Withdrawal">
+              <Form>
+                <Form.Group controlId="withdrawalAmount">
+                  <Form.Label>Amount:</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter the amount to withdraw"
+                    value={withdrawalAmount}
+                    onChange={(e) => setWithdrawalAmount(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group controlId="sourceWithdrawalBankAccount">
+                  <Form.Label>Bank Account:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={sourceAccount}
+                    onChange={(e) => setSourceAccount(e.target.value)}
+                  >
+                    <option value="">Select an account</option>
+                    {accounts.map((account, index) => (
+                      <option key={index} value={account.accountNo}>
+                        {account.accountNo}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Form>
+              <div style={centerButtonStyle}>
+                <Button variant="primary" onClick={handleWithdraw}>
+                  Withdraw
+                </Button>
+              </div>
+            </Tab>
+            <Tab eventKey="selfTransfer" title="Self Transfer">
+              <Form>
+                <Form.Group controlId="selfTransferAmount">
+                  <Form.Label>Amount:</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter the amount to transfer"
+                    value={selfTransferAmount}
+                    onChange={(e) => setSelfTransferAmount(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group controlId="sourceWithdrawalBankAccount">
+                  <Form.Label>Bank Account:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={sourceAccount}
+                    onChange={(e) => setSourceAccount(e.target.value)}
+                  >
+                    <option value="">Select an account</option>
+                    {accounts.map((account, index) => (
+                      <option key={index} value={account.accountNo}>
+                        {account.accountNo}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="targetWithdrawalBankAccount">
+                  <Form.Label>Bank Account:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={targetAccount}
+                    onChange={(e) => setTargetAccount(e.target.value)}
+                  >
+                    <option value="">Select an account</option>
+                    {accounts.map((account, index) => (
+                      <option key={index} value={account.accountNo}>
+                        {account.accountNo}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Form>
+              <div style={centerButtonStyle}>
+                <Button variant="primary" onClick={handleSelfTransfer}>
+                  Self Transfer
+                </Button>
+              </div>
+            </Tab>
+          </Tabs>
+        </StyledModalContent>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onHide}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

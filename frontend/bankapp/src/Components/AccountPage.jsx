@@ -11,6 +11,9 @@ import {
   Link,
 } from "@mui/material";
 import InputComponent from "./InputComponent";
+import InputComponentAccounts from "./InputComponentAccounts";
+import notifySuccess from "../utils/toastify-services/notifySuccess";
+import notifyError from "../utils/toastify-services/notifyError";
 
 const AccountPage = () => {
   const paperStyle = {
@@ -21,25 +24,16 @@ const AccountPage = () => {
   };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+  const customerId = sessionStorage.getItem("customerId");
 
-  const baseURL = "http://localhost:8080/createAccount/2";
+  const baseURL = `http://localhost:8080/account/${customerId}`;
   const navigate = useNavigate();
 
   const [accountType, setAccountType] = useState("");
-  const [openingDate, setOpeningDate] = useState("");
-  const [ifsc, setIfsc] = useState("");
   const [branch, setBranch] = useState("");
 
   const accountTypeHandler = (event) => {
     setAccountType(event.target.value);
-  };
-
-  const openingDateHandler = (event) => {
-    setOpeningDate(event.target.value);
-  };
-
-  const ifscHandler = (event) => {
-    setIfsc(event.target.value);
   };
 
   const branchHandler = (event) => {
@@ -49,24 +43,21 @@ const AccountPage = () => {
   const submitActionHandler = (event) => {
     event.preventDefault();
     axios
-      .get("http://localhost:8080/accountHello")
-      .then((res) => console.log(res.data));
-    console.log(event);
-    axios
       .post(baseURL, {
         accountType,
-        ifsc,
-        openingDate,
         branch,
       })
       .then((response) => {
         console.log(response);
-        alert(response.data.message);
+        //alert(response.data.message);
 
-        //navigate("/account");
+        notifySuccess(response.data);
+
+        navigate("/userdashboard");
       })
       .catch((error) => {
-        alert("error===" + error);
+        //alert("error===" + error);
+        notifyError("Account creation failed");
       });
   };
 
@@ -77,37 +68,20 @@ const AccountPage = () => {
           <Avatar style={avatarStyle}></Avatar>
           <h2>Create Account</h2>
         </Grid>
-        <Grid item xs={12}>
-          <InputComponent
+        <Grid item xs={12} mt={2}>
+          <InputComponentAccounts
             _id={"Account Type"}
             _value={accountType}
-            _placeholder={"Account Type"}
             _changeHandler={accountTypeHandler}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputComponent
-            _id={"IFSC"}
-            _value={ifsc}
-            _placeholder={"IFSC"}
-            _changeHandler={ifscHandler}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputComponent
-            _id={"Branch"}
-            _value={branch}
-            _placeholder={"Brancg"}
-            _changeHandler={branchHandler}
           />
         </Grid>
 
         <Grid item xs={12}>
           <InputComponent
-            _id={"Account Opening Date"}
-            _value={openingDate}
-            _placeholder={"Opening Date"}
-            _changeHandler={openingDateHandler}
+            _id={"Branch"}
+            _value={branch}
+            _placeholder={"Branch"}
+            _changeHandler={branchHandler}
           />
         </Grid>
 

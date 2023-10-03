@@ -1,140 +1,51 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
+import React, { useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import RecentTransactionsCard from "./RecentTransactionsCard"; // Assuming you have a TransactionTable component
 import AccountDetails from "./AccountDetails";
-import { getAccountDetails } from "../../utils/GetRequests";
-import AccountDetailsModal from "./AccountDetailsModal";
+import TransactionHistoryCard from "./TransactionHistoryCard";
+import AccountStatements from "./AccountStatements";
 
-const DashboardContainer = styled(Container)`
-  background-color: #f5f5f5;
-  padding: 20px;
-  height: 80vh;
-`;
+const UserDashboard = ({
+  customerDetails,
+  setCustomerDetails,
+  transactions,
+  setTransactions,
+}) => {
+  const [selectedTab, setSelectedTab] = useState(0);
 
-const UserCard = styled(Card)`
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-
-  h5 {
-    font-weight: bold;
-  }
-
-  p {
-    margin-top: 10px;
-  }
-`;
-
-const QuickLinksCard = styled(Card)`
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-
-  h6 {
-    font-weight: bold;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 10px;
-
-      a {
-        text-decoration: none;
-        color: #333;
-        transition: color 0.3s;
-
-        &:hover {
-          color: #007bff;
-        }
-      }
-    }
-  }
-`;
-
-const RecentTransactionsCard = styled(Card)`
-  .bg-primary.text-white {
-    border-bottom: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-`;
-const accountDetails = {
-  accountNumber: 1234567890,
-  accountType: "Savings",
-  balance: 1000,
-};
-
-const UserDashboard = () => {
-  const [accountDetails, setAccountDetails] = useState({});
-  const [ showAccountDetails, setShowAccountDetails ] = useState(false);
-  useEffect(() => {
-    getAccountDetails(2, setAccountDetails);
-  }, []);
-  const handleToggle = () => {  
-    setShowAccountDetails(!showAccountDetails);
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
   };
+
   return (
     <>
-      <AccountDetailsModal
-        show={showAccountDetails}
-        onHide={setShowAccountDetails}
-        accountDetails={accountDetails}
-      />
-      <DashboardContainer fluid>
-        <Row>
-          <Col md={3}>
-            <UserCard>
-              <Card.Body>
-                <h5 className="mb-3">Welcome, User!</h5>
-                <p>
-                  <strong>Account Balance:</strong> {accountDetails.balance}
-                </p>
-                <Button
-                  variant="primary"
-                  onClick={handleToggle}
-                >
-                  View Account Details
-                </Button>
-              </Card.Body>
-            </UserCard>
-            {/* <QuickLinksCard>
-            <Card.Body>
-              <h6>Quick Links</h6>
-              <ul>
-                <li><a href="#">Transfer Money</a></li>
-                <li><a href="#">Pay Bills</a></li>
-                <li><a href="#">Transaction History</a></li>
-              </ul>
-            </Card.Body>
-          </QuickLinksCard> */}
-          </Col>
-          <Col md={9}>
-            <RecentTransactionsCard>
-              <Card.Header className="bg-primary text-white">
-                Recent Transactions
-              </Card.Header>
-              <Card.Body>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Description</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* Map through recent transactions data and display here */}
-                  </tbody>
-                </Table>
-              </Card.Body>
-            </RecentTransactionsCard>
-          </Col>
-        </Row>
-      </DashboardContainer>
+      <Tabs value={selectedTab} onChange={handleTabChange} centered>
+        <Tab label="Account Details" />
+        <Tab label="Recent Transactions" />
+        <Tab label="Transactions History" />
+        <Tab label="Account Statements" />
+      </Tabs>
+
+      {selectedTab === 0 && (
+        <AccountDetails accounts={customerDetails.account} />
+      )}
+      {selectedTab === 1 && (
+        <RecentTransactionsCard transactions={transactions} />
+      )}
+      {selectedTab === 2 && (
+        <TransactionHistoryCard
+          transactions={transactions}
+          accounts={customerDetails.account}
+        />
+      )}
+
+      {selectedTab === 3 && (
+        <AccountStatements
+          transactions={transactions}
+          accounts={customerDetails.account}
+        />
+      )}
     </>
   );
 };

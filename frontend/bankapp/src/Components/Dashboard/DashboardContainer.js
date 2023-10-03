@@ -12,16 +12,11 @@ export default function DashboardContainer() {
         <Grid item xs={4}>
           <Container>
             <Box sx={{ bgcolor: "#cfe8fc", height: "80vh" }}>
-            <ListComponent />
+              <ListComponent />
             </Box>
           </Container>
         </Grid>
-        <Grid item xs={8}>
-          
-
-         
-          
-        </Grid>
+        <Grid item xs={8}></Grid>
       </Grid>
     </>
   );

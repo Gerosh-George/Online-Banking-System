@@ -1,65 +1,101 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import Card from "react-bootstrap/Card";
+import Table from "react-bootstrap/Table";
+import styled from "styled-components";
+import AccountDetailsModal from "./AccountDetailsModal";
+import { mockAccountData } from "../../utils/data";
 
-// Define the styled component for the Accounts table
-const StyledAccountsTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-
-  th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  th {
-    background-color: #007bff;
-    color: #fff;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
+const StyledAccountDetailsCard = styled(Card)`
+  .bg-primary.text-white {
+    border-bottom: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 `;
 
-const AccountDetails = () => {
-  // Sample account data
-  const accounts = [
-    {
-      accountNumber: '12345678',
-      accountType: 'Savings',
-      balance: '$5,000.00',
-    },
-    {
-      accountNumber: '98765432',
-      accountType: 'Checking',
-      balance: '$2,000.00',
-    },
-  ];
+const ScrollableTableContainer = styled.div`
+  max-height: 62vh; /* Adjust the height as needed */
+  overflow-y: auto;
+`;
+
+const ClickableCell = styled.td`
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const AccountTable = styled(Table)`
+  td.success {
+    color: green;
+  }
+
+  td.fail {
+    color: red;
+  }
+`;
+
+const AccountDetails = ({ accounts }) => {
+  
+  const [selectedAccount, setSelectedAccount] = useState("");
+  const [showAccountDetails, setShowAccountDetails] = useState(false);
+  const handleToggle = () => {
+    setShowAccountDetails(!showAccountDetails);
+  };
+  const handleClick = (event) => {
+    const val = event.target.innerText;
+    console.log(typeof val);
+    setSelectedAccount(val);
+    setShowAccountDetails(!showAccountDetails);
+  };
 
   return (
-    <div>
-      
-      <StyledAccountsTable>
-        <thead>
-          <tr>
-            <th>Account Number</th>
-            <th>Account Type</th>
-            <th>Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Map through the sample account data */}
-          {accounts.map((account, index) => (
-            <tr key={index}>
-              <td>{account.accountNumber}</td>
-              <td>{account.accountType}</td>
-              <td>{account.balance}</td>
-            </tr>
-          ))}
-        </tbody>
-      </StyledAccountsTable>
-    </div>
+    <>
+      <AccountDetailsModal
+        show={showAccountDetails}
+        onHide={setShowAccountDetails}
+        selectedAccount={selectedAccount}
+      />
+      <StyledAccountDetailsCard>
+        <Card.Header className="bg-primary text-white">
+          Account Details
+        </Card.Header>
+        <Card.Body>
+          <ScrollableTableContainer>
+            <AccountTable striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>Account Type</th>
+                  <th>Account Number</th>
+                  <th>Branch</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {accounts.map((account, index) => (
+                  <tr key={index}>
+                    <td>{account.accountType}</td>
+
+                    <ClickableCell onClick={(event) => handleClick(event)}>
+                      <td
+                        className={
+                          account.disabled  ? "fail" : "success"
+                        }
+                      >
+                        {account.accountNo}
+                      </td>
+                    </ClickableCell>
+                    <td>{account.branch}</td>
+                    <td>${account.balance}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </AccountTable>
+          </ScrollableTableContainer>
+        </Card.Body>
+      </StyledAccountDetailsCard>
+    </>
   );
 };
 

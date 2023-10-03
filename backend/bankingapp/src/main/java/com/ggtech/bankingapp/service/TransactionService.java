@@ -103,7 +103,7 @@ public class TransactionService {
        List<Transaction> statement =new ArrayList<>();
        if(endDate.after(startDate)) {
            for (Transaction transaction : transactionList) {
-               if (transaction.getTimestamp() == startDate || transaction.getTimestamp() == endDate || (transaction.getTimestamp().after(startDate) && transaction.getTimestamp().before(endDate))) {
+               if (transaction.getTimestamp().equals(startDate) || transaction.getTimestamp().equals(endDate) || (transaction.getTimestamp().after(startDate) && transaction.getTimestamp().before(endDate))) {
                    statement.add(transaction);
                }
            }
@@ -117,9 +117,5 @@ public class TransactionService {
         return transactionList.stream().sorted(Comparator.comparing(Transaction::getTimestamp).reversed()).limit(5).collect(Collectors.toList());
     }
 
-    //TODO
-    public String withdrawal(){
-        return null;
-    }
 
 }

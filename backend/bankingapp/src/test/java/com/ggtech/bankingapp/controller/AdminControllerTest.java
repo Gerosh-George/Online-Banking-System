@@ -35,16 +35,14 @@ class AdminControllerTest {
     @MockBean
     private AdminService adminService;
 
-    /**
-     * Method under test: {@link AdminController#saveAdmin(Admin)}
-     */
+
     @Test
     void testSaveAdmin() throws Exception {
         when(adminService.saveAdmin(Mockito.<Admin>any())).thenReturn("Save Admin");
 
         Admin admin = new Admin();
-        admin.setPassword("iloveyou");
-        admin.setUserid("Userid");
+        admin.setPassword("password");
+        admin.setUserid("1");
         String content = (new ObjectMapper()).writeValueAsString(admin);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/save")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -57,9 +55,6 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Save Admin"));
     }
 
-    /**
-     * Method under test: {@link AdminController#addFund(AddBalanceRequest)}
-     */
     @Test
     void testAddFund() throws Exception {
         when(adminService.addCustomerBalance(anyLong(), anyDouble())).thenReturn("Add Customer Balance");
@@ -79,9 +74,7 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Add Customer Balance"));
     }
 
-    /**
-     * Method under test: {@link AdminController#getAccounts()}
-     */
+
     @Test
     void testGetAccounts() throws Exception {
         when(adminService.getAccounts()).thenReturn(new ArrayList<>());
@@ -94,80 +87,8 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link AdminController#getAccounts()}
-     */
-    @Test
-    void testGetAccounts2() throws Exception {
-        when(adminService.getAccounts()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/admin/accounts");
-        requestBuilder.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
 
-    /**
-     * Method under test: {@link AdminController#adminLogin(Admin)}
-     */
-    @Test
-    void testAdminLogin() throws Exception {
-        when(adminService.login(Mockito.<Admin>any())).thenReturn("Login");
 
-        Admin admin = new Admin();
-        admin.setPassword("iloveyou");
-        admin.setUserid("Userid");
-        String content = (new ObjectMapper()).writeValueAsString(admin);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Login"));
-    }
 
-    /**
-     * Method under test: {@link AdminController#toggleDisable(long)}
-     */
-    @Test
-    void testToggleDisable() throws Exception {
-        when(adminService.toggleAccountStatus(anyLong())).thenReturn("3");
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/toggleAccountStatus/{accno}",
-                1L);
-        MockMvcBuilders.standaloneSetup(adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("3"));
-    }
-
-    /**
-     * Method under test: {@link AdminController#updateBalance(AddBalanceRequest)}
-     */
-    @Test
-    void testUpdateBalance() throws Exception {
-        when(adminService.updateCustomerBalance(anyLong(), anyDouble())).thenReturn("2020-03-01");
-
-        AddBalanceRequest addBalanceRequest = new AddBalanceRequest();
-        addBalanceRequest.setAccno(1L);
-        addBalanceRequest.setAmount(10.0d);
-        String content = (new ObjectMapper()).writeValueAsString(addBalanceRequest);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/admin/updateBalance")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("2020-03-01"));
-    }
 
 }

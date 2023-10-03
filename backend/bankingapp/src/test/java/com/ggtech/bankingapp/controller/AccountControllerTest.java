@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -35,15 +34,10 @@ class AccountControllerTest {
     private AccountsService accountsService;
 
 
-
-
-    /**
-     * Method under test: {@link AccountController#fetchTransactions(long)}
-     */
     @Test
     void testFetchTransactions() throws Exception {
         when(accountsService.fetchTransactions(anyLong())).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/fetchTransactions/{accno}", 1L);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/transactions/{accno}", 1L);
         MockMvcBuilders.standaloneSetup(accountController)
                 .build()
                 .perform(requestBuilder)
@@ -52,33 +46,32 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link AccountController#getAccountDetails(long)}
-     */
+
     @Test
     void testGetAccountDetails() throws Exception {
         Customer customer = new Customer();
-        customer.setAadhar("Aadhar");
+        customer.setAadhar("123456789012");
         customer.setAccount(new ArrayList<>());
         customer.setAddress("42 Main St");
         customer.setCustomerId(1L);
-        customer.setDob("Dob");
+        customer.setDob("03-09-2001");
         customer.setEmail("jane.doe@example.org");
-        customer.setFathername("Fathername");
+        customer.setFathername("Bob");
         customer.setMobile(1L);
-        customer.setMothername("Mothername");
-        customer.setName("Name");
-        customer.setPassword("abcdefghij");
+        customer.setMothername("Mary");
+        customer.setName("Jane");
+        customer.setPassword("password");
 
         Account account = new Account();
         account.setAccountNo(1234567890L);
-        account.setAccountType("3");
+        account.setAccountType("SAVINGS");
         account.setBalance(10.0d);
-        account.setBranch("Embassy");
+        account.setBranch("BLR");
         account.setCustomer(customer);
         account.setDisabled(true);
-        account.setIfsc("Ifsc");
+        account.setIfsc("12345");
         account.setOpeneingDate(LocalDate.of(1970, 1, 1).atStartOfDay());
+        account.setTransaction(new ArrayList<>());
         when(accountsService.getAccountDetails(anyLong())).thenReturn(account);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/getAccountDetails/{accno}", 1L);
         MockMvcBuilders.standaloneSetup(accountController)
@@ -88,10 +81,50 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"accountNo\":1234567890,\"accountType\":\"3\",\"balance\":10.0,\"branch\":\"Embassy\",\"ifsc\":\"Ifsc"
-                                        + "\",\"openeingDate\":[1970,1,1,0,0],\"customer\":{\"customerId\":1,\"name\":\"Name\",\"password\":\"abcdefghij\",\"email"
-                                        + "\":\"jane.doe@example.org\",\"mobile\":1,\"aadhar\":\"Aadhar\",\"dob\":\"Dob\",\"address\":\"42 Main St\",\"fathername"
-                                        + "\":\"Fathername\",\"mothername\":\"Mothername\",\"account\":[]},\"disabled\":true}"));
+                                "{\"accountNo\":1234567890,\"accountType\":\"SAVINGS\",\"balance\":10.0,\"branch\":\"BLR\",\"ifsc\":\"12345"
+                                        + "\",\"openeingDate\":[1970,1,1,0,0],\"transaction\":[],\"disabled\":true}"));
+    }
+
+
+    @Test
+    void testCheckBalance() throws Exception {
+        when(accountsService.checkBalance(anyLong())).thenReturn(10.0d);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/checkBalance/{accno}", 1L);
+        MockMvcBuilders.standaloneSetup(accountController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("10.0"));
+    }
+
+
+
+
+    @Test
+    void testGetAllAccountBalance() throws Exception {
+        when(accountsService.getAllAccountBalance(anyLong())).thenReturn(10.0d);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/allAccountBalance/{cid}", 1L);
+        MockMvcBuilders.standaloneSetup(accountController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("10.0"));
+    }
+
+
+
+    @Test
+    void testGetAccount() throws Exception {
+        when(accountsService.getUserAccounts(anyLong())).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/account/{uid}", 1L);
+        MockMvcBuilders.standaloneSetup(accountController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 }
 

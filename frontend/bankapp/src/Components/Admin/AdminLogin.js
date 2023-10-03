@@ -10,11 +10,14 @@ import {
   Typography,
   Link,
 } from "@mui/material";
-import InputComponent from "./InputComponent";
-import NavBar from "./NavBar";
+import InputComponent from "../InputComponent";
+import notifySuccess from "../../utils/toastify-services/notifySuccess";
+import notifyError from "../../utils/toastify-services/notifyError";
+import NavBar from "../NavBar";
 
-const FormComponent = () => {
-  const [customerId, setCustomerId] = useState("");
+
+const AdminLogin = () => {
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
   const paperStyle = {
@@ -27,10 +30,8 @@ const FormComponent = () => {
   const btnstyle = { margin: "8px 0" };
   const navigate = useNavigate();
 
-  const customerIdChangeHandler = (event) => {
-    //alert(event.target.value);
-    //console.log(regno);
-    setCustomerId(event.target.value);
+  const userIdChangeHandler = (event) => {
+    setUserId(event.target.value);
   };
 
   const passwordHandler = (event) => {
@@ -39,40 +40,44 @@ const FormComponent = () => {
 
   const submitActionHandler = (event) => {
     event.preventDefault();
-    const baseURL = "http://localhost:8080/login";
+    const baseURL = "http://localhost:8080/admin/login";
     console.log(event);
-    sessionStorage.setItem("customerId", customerId);
+
     axios
       .post(baseURL, {
-        customerId: customerId,
+        userid: userId,
         password: password,
       })
       .then((response) => {
-        console.log(response);
-        alert(response.data);
-
-        navigate("/UserDashboard");
+        if(response.data === "Login success"){
+          notifySuccess(response.data);
+          sessionStorage.setItem("adminId", userId);
+          navigate("/admindashboard");
+        }else{
+          notifyError(response.data)
+        }
+        
       })
       .catch((error) => {
-        alert("error===" + error);
+        notifyError(error.response.data.message)
       });
   };
 
   return (
     <>
-      
+      <NavBar />
       <Grid>
         <Paper elevation={10} style={paperStyle}>
           <Grid item align="center">
             <Avatar style={avatarStyle}></Avatar>
-            <h2>LOG IN</h2>
+            <h2>ADMIN LOG IN</h2>
           </Grid>
           <Grid item xs={12}>
             <InputComponent
-              _id={"CustomerID"}
-              _value={customerId}
-              _placeholder={"Enter CustomerID"}
-              _changeHandler={customerIdChangeHandler}
+              _id={"UserId"}
+              _value={userId}
+              _placeholder={"Enter UserID"}
+              _changeHandler={userIdChangeHandler}
             />
           </Grid>
           <Grid item xs={12}>
@@ -81,6 +86,7 @@ const FormComponent = () => {
               _value={password}
               _placeholder={"Enter Password"}
               _changeHandler={passwordHandler}
+              _type={"password"}
             />
           </Grid>
 
@@ -101,12 +107,6 @@ const FormComponent = () => {
               alignItems: "center",
             }}
           >
-            <Typography>
-              <Link href="#">Forgot Password</Link>
-            </Typography>
-            <Typography>
-              Become Customer : <Link href="#">Sign Up</Link>
-            </Typography>
           </div>
         </Paper>
       </Grid>
@@ -114,4 +114,4 @@ const FormComponent = () => {
   );
 };
 
-export default FormComponent;
+export default AdminLogin;

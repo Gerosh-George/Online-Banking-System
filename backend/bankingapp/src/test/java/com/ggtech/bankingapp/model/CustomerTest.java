@@ -21,10 +21,10 @@ class CustomerTest {
         customer.setAddress("42 Main St");
         customer.setDob("2001-09-03");
         customer.setEmail("jane.doe@example.org");
-        customer.setFathername("Fathername");
+        customer.setFathername("Bob");
         customer.setMobile(987654321L);
-        customer.setMothername("Mothername");
-        customer.setName("Name");
+        customer.setMothername("Mary");
+        customer.setName("Jane");
         customer.setPassword("123456");
         String actualAadhar = customer.getAadhar();
         List<Account> actualAccount = customer.getAccount();
@@ -42,10 +42,10 @@ class CustomerTest {
         assertEquals(0L, actualCustomerId);
         assertEquals("2001-09-03", actualDob);
         assertEquals("jane.doe@example.org", actualEmail);
-        assertEquals("Fathername", actualFathername);
+        assertEquals("Bob", actualFathername);
         assertEquals(987654321L, actualMobile);
-        assertEquals("Mothername", actualMothername);
-        assertEquals("Name", actualName);
+        assertEquals("Mary", actualMothername);
+        assertEquals("Jane", actualName);
         assertEquals("123456", customer.getPassword());
     }
 }
